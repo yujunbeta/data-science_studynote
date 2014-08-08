@@ -11,8 +11,8 @@
 
 + Informatics
  - data import and export
- - data cleaning
-+Analytic
+ - data cleaning 
++ Analytic
  - exploratory data stucture
  - statistical estimation and prediction
  - machine learning
