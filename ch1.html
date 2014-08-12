@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>第一部分：数据信息</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h2>第一部分：数据信息</h2>
+
+<p>生活中，我们面临着各种各样的数据：比如你的成绩单，比如公司的财务报表，比如朋友圈的一些状态，比如微信里的一段语音……我们生活的大数据时代的一个重要特征便是数据的多样化（variety）。<br/>
+也许你期待的数据是这样的：</p>
+
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+</code></pre>
+
+<p>然而事实上我们面临的数据确实这样的：</p>
+
+<pre><code>@HWI-EAS121:4:100:1783:550#0/1
+CGTTACGAGATCGGAAGAGCGGTTCAGCAGGAATGCCGAGACGGATCTCGTATGCGGTCTGCTGCGTGACAAGACAGGGG
++HWI-EAS121:4:100:1783:550#0/1
+aaaaa`b_aa`aa`YaX]aZ`aZM^Z]YRa]YSG[[ZREQLHESDHNDDHNMEEDDMPENITKFLFEEDDDHEJQMEDDD
+@HWI-EAS121:4:100:1783:1611#0/1
+GGGTGGGCATTTCCACTCGCAGTATGGGTTGCCGCACGACAGGCAGCGGTCAGCCTGCGCTTTGGCCTGGCCTTCGGAAA
++HWI-EAS121:4:100:1783:1611#0/1
+a``^\__`_```^a``a`^a_^__]a_]\]`a______`_^^`]X]_]XTV_\]]NX_XVX]]_TTTTG[VTHPN]VFDZ
+@HWI-EAS121:4:100:1783:322#0/1
+CGTTTATGTTTTTGAATATGTCTTATCTTAACGGTTATATTTTAGATGTTGGTCTTATTCTAACGGTCATATATTTTCTA
+
+</code></pre>
+
+<p>还有这样的：</p>
+
+<pre><code>{
+    &quot;uid&quot;: 10438,
+    &quot;result&quot;: [
+        {
+            &quot;day&quot;: &quot;2011-12-12&quot;,
+            &quot;followers_count&quot;: &quot;63&quot;,   //粉丝数
+            &quot;v_followers_count&quot;: &quot;18&quot;, //V粉丝数
+            &quot;daren_followers_count&quot;: &quot;18&quot;, //达人粉丝数
+            &quot;friends_count&quot;: &quot;58&quot;,    //关注数
+            &quot;v_friends_count&quot;: &quot;58&quot;,  //V关注数
+            &quot;statuses_count&quot;: &quot;258&quot;,   //微博数
+            &quot;bi_followers_count&quot;: &quot;18&quot;,  //互粉数
+            &quot;repost_count&quot;: &quot;115&quot;, //转发数
+            &quot;comments_count&quot;: &quot;178&quot;,   //评论数
+        },
+        ...
+    ]
+}
+
+</code></pre>
+
+<p>那么我们如何去处理这些数据，我们如何分析这些数据，从数据中找到我们想要的东西呢？我们将从如何将这些数据导入R中开始，慢慢学习如何处理，分析我们身边的大数据。  </p>
+
+<h1>第一章 数据的导入</h1>
+
+<p>面对各种各样纷杂的数据，我们分析的第一步便是获取数据并将其导入R中。</p>
+
+<h3>从网上获取数据</h3>
+
+<p>大数据的一个重要数据源便是互联网。从网络上获取数据并用来分析是非常重要的。为了得到这些数据，一个普通青年的做法便是来到一个网站，找到数据连接，然后右键-&gt;目标另存为，最后从本地文件夹中导入R。但是如果要下载的数据文件数目比较多，再这么做就从一个普通青年降级为了二逼青年。<br/>
+为了应对需要下载多个文件的情况，R提供了函数download.file()，使得R可以从互联网上直接把数据拽下来。其调用格式为：</p>
+
+<pre><code>download.file(url, destfile, method, quiet = FALSE, mode = &quot;w&quot;,
+              cacheOK = TRUE,
+              extra = getOption(&quot;download.file.extra&quot;))
+
+</code></pre>
+
+<p>主要的参数为：  </p>
+
+<ul>
+<li>url:文件的所在地址</li>
+<li>destfile:下载后文件的保存地址，默认为工作目录</li>
+<li>method:  提供&quot;internal&quot;, &ldquo;wget&rdquo;, &ldquo;curl&rdquo; 和 &ldquo;lynx&quot;四种method，在windows上通常internal就能解决大多数的问题，少数搞不定的如Cygwin, gnuwin32这种的&quot;wget&quot;就可以搞定；windows的二进制文件用“curl”，这个method对于Mac的用户来说是都要设置的；“lynx”主要针对historical interest。<br/></li>
+</ul>
+
+<h5>用法举例：获取上市公司资产负债表</h5>
+
+<p>比如说我们要获取一系列的上市公司财务数据，我们就要得到他们的资产负债表。当然，如果花钱买wind数据库，一切也就不用操心了。但是如果不在学校，用不了数据库的话，一个可以替代的办法就是从新浪财经里面拽数据：以安信信托(600816) 资产负债表为例，你可以访问<a href="http://vip.stock.finance.sina.com.cn/corp/go.php/vFD_BalanceSheet/stockid/600816/ctrl/part/displaytype/4.phtml">新浪财经</a>就能看个明白，还可以下载。我们如果还要其他的股票，我们都可以如法炮制。那么我们通过R用download.file写一个函数来实现输入股票代码，将资产负债表下载到指定目录：</p>
+
+<pre><code class="r">getbalancesheets=function(symbol,file){
+pre=&quot;http://money.finance.sina.com.cn/corp/go.php/vDOWN_BalanceSheet/displaytype/4/stockid/&quot;;
+end=&quot;/ctrl/all.phtml&quot;;
+
+url=paste(pre,symbol,end,sep=&quot;&quot;);
+destfile=paste(file,&quot;BalanceSheet_&quot;,symbol,&quot;.xls&quot;,sep=&quot;&quot;);
+
+download.file(url, destfile);
+}
+</code></pre>
+
+<p>值得注意的是：  </p>
+
+<ul>
+<li>凡是以http开头的，放心大胆的使用download.file()</li>
+<li>凡是以https开头的，这个函数可能失效</li>
+<li>在设置路径时可以通过file.exists来查看文件夹是否存在，如果不存在可以使用dir.create来创建它，避免找不到路径的烦恼。</li>
+<li>使用getwd获取当前工作路径，setwd可以改变它</li>
+</ul>
+
+<h3>读入本地数据</h3>
+
+<p>文件下载下来后，我们便需要读入这些数据。而读入这些数据的三大基本函数便是scan,read.table,read.csv。特别的基础，能读的格式基本限于txt,csv,但是其中的一些参数设置却是绝大多数读入其他格式文件里也用得到的。<br/>
+我们先来看看这三个函数的基本调用格式：</p>
+
+<pre><code>scan(file = &quot;&quot;, what = double(), nmax = -1, n = -1, sep = &quot;&quot;,
+     quote = if(identical(sep, &quot;\n&quot;)) &quot;&quot; else &quot;&#39;\&quot;&quot;, dec = &quot;.&quot;,
+     skip = 0, nlines = 0, na.strings = &quot;NA&quot;,
+     flush = FALSE, fill = FALSE, strip.white = FALSE,
+     quiet = FALSE, blank.lines.skip = TRUE, multi.line = TRUE,
+     comment.char = &quot;&quot;, allowEscapes = FALSE,
+     fileEncoding = &quot;&quot;, encoding = &quot;unknown&quot;, text)
+read.table(file, header = FALSE, sep = &quot;&quot;, quote = &quot;\&quot;&#39;&quot;,
+           dec = &quot;.&quot;, row.names, col.names,
+           as.is = !stringsAsFactors,
+           na.strings = &quot;NA&quot;, colClasses = NA, nrows = -1,
+           skip = 0, check.names = TRUE, fill = !blank.lines.skip,
+           strip.white = FALSE, blank.lines.skip = TRUE,
+           comment.char = &quot;#&quot;,
+           allowEscapes = FALSE, flush = FALSE,
+           stringsAsFactors = default.stringsAsFactors(),
+           fileEncoding = &quot;&quot;, encoding = &quot;unknown&quot;, text)
+
+read.csv(file, header = TRUE, sep = &quot;,&quot;, quote = &quot;\&quot;&quot;,
+         dec = &quot;.&quot;, fill = TRUE, comment.char = &quot;&quot;, ...)
+
+read.csv2(file, header = TRUE, sep = &quot;;&quot;, quote = &quot;\&quot;&quot;,
+          dec = &quot;,&quot;, fill = TRUE, comment.char = &quot;&quot;, ...)
+
+</code></pre>
+
+<p>其中主要参数我们简介如下：   </p>
+
+<ul>
+<li>file:文件的路径</li>
+<li>header:是否将第一行读作变量名</li>
+<li>sep:以什么为分隔符，如“，”，“ ”等</li>
+<li>row.names:你可以给每一行指定名字，col.names是给每一列指定名字</li>
+<li>nrows:读取前n行，默认为读完整个文件</li>
+<li>skip:从第n行开始读入</li>
+<li>na.strings：缺失值的符号，比如“NA”，“？”，“ ”等。</li>
+</ul>
+
+<h3>读入Excel文件</h3>
+
+<p>Excel数据目前仍是使用十分广泛的小数据存储格式，像之前我们的财务报表就是一例。那么如何读入Excel数据呢？<br/>
+对于Excel数据一个常用的办法就是将其转存为csv格式，这就划归到我们前一个问题。<br/>
+另一个办法是将excel的数据放在剪贴板中，通过read.delim（clipbroad）来读取。
+还有R中的gdata包的read.xls函数也可以解决这样一个问题。<br/>
+随着Excel的升级，Excel的格式升级为了.xlsx。R也推出了xlsx包.其用法如下：</p>
+
+<pre><code>read.xlsx(file, sheetIndex, sheetName=NULL, rowIndex=NULL,
+  startRow=NULL, endRow=NULL, colIndex=NULL,
+  as.data.frame=TRUE, header=TRUE, colClasses=NA,
+  keepFormulas=FALSE, encoding=&quot;unknown&quot;, ...)
+
+read.xlsx2(file, sheetIndex, sheetName=NULL, startRow=1,
+  colIndex=NULL, endRow=NULL, as.data.frame=TRUE, header=TRUE,
+  colClasses=&quot;character&quot;, ...)
+
+</code></pre>
+
+<p>主要参数为：  </p>
+
+<ul>
+<li>file:文件路径</li>
+<li>sheetIndex:Excel内部的表单数目</li>
+<li>rowIndex:读取Excel指定行数，相应的colIndex为读取指定列数<br/></li>
+</ul>
+
+<p>注意事项：  </p>
+
+<p>1、 write.xlsx函数参数类似，可以把数据写为Excel文件。但是比起csv,txt格式，我们不推荐你这么做。  </p>
+
+<p>2、 read.xlsx2读取数据方面似乎要比read.xlsx快一些，但是据说读取指定行列数目时不那么稳定。  </p>
+
+<p>3、 在装载你的xlsx时，请配置好Java的相关环境  </p>
+
+<h3>读入其他数据分析软件的数据</h3>
+
+<p>自带的foreign包可以实现s-plus，sas，spss，stata的数据读入。  </p>
+
+<h3>读入XML</h3>
+
+<p>XML可以说是我们非常熟悉的一类数据。我们通常在网上看到的电子表格便是XML文件的一部分。我们可以看到XML文件大抵是长<a href="http://www.w3schools.com/xml/simple.xml">这样</a>的.如何打开这样的一个文件？其实最简单的就是用EXCEL表格打开了，我们只要在打开文件时作为 XML 列表打开文件。当打开 XML 源时，Excel 会查找 XML 样式表 (XSL) 的标记。XSL 说明数据的显示方式。如果存在相应的标记，Excel 将会提示您选择是否应用样式表。如果选择应用 XSL，则 XSL 将指示数据的显示方式。  </p>
+
+<p>关于XML这种可扩展性标记语言，我们不再赘述，可以参阅<a href="http://en.wikipedia.org/wiki/XML">wiki</a>.这里我们关注的是在得到XML文件后如何分析处理。  </p>
+
+<p>R提供了XML包供我们来读取这样一个文件。我们将XML包的主要函数介绍如下：  </p>
+
+<pre><code>xmlTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE,
+             asText=FALSE, trim=TRUE, validate=FALSE, getDTD=TRUE,
+             isURL=FALSE, asTree = FALSE, addAttributeNamespaces = FALSE,
+             useInternalNodes = FALSE, isSchema = FALSE,
+             fullNamespaceInfo = FALSE, encoding = character(),
+             useDotNames = length(grep(&quot;^\\.&quot;, names(handlers))) &gt; 0,
+             xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(),
+             isHTML = FALSE, options = integer(), parentFirst = FALSE)
+
+xmlRoot(x, skip = TRUE, ...)
+## S3 method for class &#39;XMLDocumentContent&#39;
+xmlRoot(x, skip = TRUE, ...)
+## S3 method for class &#39;XMLInternalDocument&#39;
+xmlRoot(x, skip = TRUE, addFinalizer = NA, ...)
+## S3 method for class &#39;HTMLDocument&#39;
+xmlRoot(x, skip = TRUE, ...)
+
+</code></pre>
+
+<ul>
+<li>xmlTreeParse函数主要是用于解析XML或HTML文件包含XML / HTML内容或字符串,并生成一个R代表XML / HTML树结构。<br/></li>
+<li>xmlRoot函数主要是用于提供方便地访问由解析一个XML文档产生的顶级XMLNode对象.<br/></li>
+</ul>
+
+<p>我们下面就来一步一步的分析如何读取一个XML或者HTML文件：  </p>
+
+<ul>
+<li>获取网页数据<br/></li>
+</ul>
+
+<p>这时你需要用到RCurl包的getURL函数来下载相关网页，我们以最近BBC上最火的<a href="http://www.bbc.com/news/entertainment-arts-28761353">Robin Williams的一则新闻</a>为例说说怎样读取HTML文件(因为中文有些网站会出现乱码，为了避免不必要的麻烦，我们暂时使用英文网站，稍后的例子会有中文的):</p>
+
+<pre><code class="r">library(RCurl)
+library(XML)
+
+url &lt;- &quot;http://www.bbc.com/news/entertainment-arts-28761353&quot;
+SOURCE &lt;-  getURL(url,encoding=&quot;UTF-8&quot;) #Download the page
+#this is a very very long line. Let&#39;s not print it. Instead:
+substring (SOURCE,1,200)
+</code></pre>
+
+<pre><code>## [1] &quot;&lt;!DOCTYPE html PUBLIC \&quot;-//W3C//DTD XHTML+RDFa 1.0//EN\&quot; \&quot;http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd\&quot;&gt;\n\n\n&lt;html xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot; xmlns:og=\&quot;http://opengraphprotocol.org/schema/\&quot; xml&quot;
+</code></pre>
+
+<pre><code class="r">PARSED &lt;- htmlParse(SOURCE) #Format the html code d
+</code></pre>
+
+<ul>
+<li>获取HTML的元素<br/></li>
+</ul>
+
+<p>我们可以通过XPath的相关函数来获取HTML的相关信息：</p>
+
+<pre><code class="r">xpathSApply(PARSED, &quot;//h1&quot;)
+</code></pre>
+
+<pre><code>## [[1]]
+## &lt;h1 class=&quot;story-header&quot;&gt;Robin Williams: Obama leads tributes to actor, dead at 63&lt;/h1&gt;
+</code></pre>
+
+<p>这样的标题由于含有HTML标记，让我们很不爽，我们可以通过下面函数来去掉它：</p>
+
+<pre><code class="r">xpathSApply(PARSED, &quot;//h1&quot;,xmlValue)
+</code></pre>
+
+<pre><code>## [1] &quot;Robin Williams: Obama leads tributes to actor, dead at 63&quot;
+</code></pre>
+
+<p>相应的函数调用格式如下：</p>
+
+<pre><code>xpathApply(doc, path, fun, ... ,
+            namespaces =  xmlNamespaceDefinitions(doc, simplify = TRUE),
+              resolveNamespaces = TRUE, addFinalizer = NA)
+xpathSApply(doc, path, fun = NULL, ... ,
+             namespaces = xmlNamespaceDefinitions(doc, simplify = TRUE),
+               resolveNamespaces = TRUE, simplify = TRUE, addFinalizer = NA)
+
+</code></pre>
+
+<p>主要参数：  </p>
+
+<ul>
+<li>doc:XMLInternalDocument类型的数据，htmlParse函数产生的对象</li>
+<li>path:XPath 表达式，常用的有 &rdquo;/&ldquo; 表示根节点处寻找;&rdquo;//&ldquo;表示文档任意处寻找;&rdquo;@&ldquo;表示选择相应的属性</li>
+</ul>
+
+<p>我们可以通过抓取HTML里的关键词来发现很多东西，比如我们想知道这个页面有多少条链接，我们只需要运行：</p>
+
+<pre><code>length(xpathSApply(PARSED, &quot;//a/@href&quot;))
+</code></pre>
+
+<p>再比如我们想要知道新闻的日期，我们可以运行：</p>
+
+<pre><code>xpathSApply(PARSED, &quot;//span[@class=&#39;date&#39;]&quot;,xmlValue)
+</code></pre>
+
+<p>最后要说的是，你的挖掘一定要对HTML的结构十分的熟悉，比如页面有哪些元素，这是第几级的结构等，方便在使用@时确定能找到有关属性，比如说我想知道BBC报道了哪些最近的关于中国的新闻，我们就可以运行以下代码：</p>
+
+<pre><code class="r">url=&quot;http://www.bbc.co.uk/search/news/?q=China&amp;search_form=in-page-search-form&quot;
+SOURCE &lt;-  getURL(url,encoding=&quot;UTF-8&quot;)
+PARSED &lt;- htmlParse(SOURCE)
+targets &lt;- unique(xpathSApply(PARSED, &quot;//a[@class=&#39;title linktrack-title&#39;]/@href&quot;))
+head(targets)
+</code></pre>
+
+<pre><code>## [1] &quot;http://www.bbc.co.uk/news/blogs-echochambers-28747713&quot; 
+## [2] &quot;http://www.bbc.co.uk/news/uk-scotland-22207042&quot;        
+## [3] &quot;http://www.bbc.co.uk/news/in-pictures-28743753&quot;        
+## [4] &quot;http://www.bbc.co.uk/news/science-environment-28744469&quot;
+## [5] &quot;http://www.bbc.co.uk/news/technology-28754235&quot;         
+## [6] &quot;http://www.bbc.co.uk/news/world-europe-28755656&quot;
+</code></pre>
+
+<p>然而，对于上面那篇文章，&rdquo;//a[@class=&#39;title linktrack-title&#39;]/@href&quot;是找不到任何东西的。进一步地，对于每一个链接，如果我们还想知道标题与日期，我们可以使用sapply函数：</p>
+
+<pre><code class="r">bbcScraper2 &lt;- function(url){
+  title=date=NA #Return empty values in case field not found
+  SOURCE &lt;-  getURL(url,encoding=&quot;UTF-8&quot;) 
+  PARSED &lt;- htmlParse(SOURCE)
+  title=(xpathSApply(PARSED, &quot;//h1[@class=&#39;story-header&#39;]&quot;,xmlValue))
+  date=(xpathSApply(PARSED, &quot;//meta[@name=&#39;OriginalPublicationDate&#39;]/@content&quot;))
+  if (is.null(date)){
+    date=(xpathSApply(PARSED, &quot;//span[@class=&#39;date&#39;]&quot;,xmlValue))
+  }
+  return(c(title,as.character(date)))
+}
+targets&lt;-as.data.frame(targets)
+t(sapply(targets[1:5,],bbcScraper2))
+</code></pre>
+
+<pre><code>##      [,1]                                                   
+## [1,] &quot;Conservatives misguided after Ferguson shooting&quot;      
+## [2,] &quot;Q&amp;A: Edinburgh&#39;s giant pandas&quot;                        
+## [3,] &quot;In pictures: Framing Hope&quot;                            
+## [4,] &quot;Rising economies &#39;ahead on climate&#39;&quot;                  
+## [5,] &quot;Google helps build &#39;Faster&#39; cable under Pacific Ocean&quot;
+##      [,2]                 
+## [1,] &quot;2014/08/12 17:05:25&quot;
+## [2,] &quot;2014/08/12 16:00:21&quot;
+## [3,] &quot;2014/08/12 14:55:21&quot;
+## [4,] &quot;2014/08/12 12:16:23&quot;
+## [5,] &quot;2014/08/12 11:54:11&quot;
+</code></pre>
+
+<ul>
+<li>Useful link：
+
+<ul>
+<li><a href="http://www.w3schools.com/xpath/default.asp">Xpath的相关介绍</a></li>
+<li><a href="http://www.w3school.com.cn/xml/index.asp">XML的相关介绍</a></li>
+<li><a href="http://www.w3school.com.cn/html/index.asp">HTML的相关介绍</a></li>
+</ul></li>
+</ul>
+
+<h5>应用举例：获取当当网的图书定价</h5>
+
+<p>在比价的过程中，我们首要的任务就是从网上获取价格数据。我们该如何从<a href="http://category.dangdang.com/pg1-cp01.00.00.00.00.00.html">当当</a>的图书页面获取价格数据呢？</p>
+
+<pre><code class="r">library(XML)
+library(RCurl)
+book_price=NULL
+for(i in 1:2){
+    url_i&lt;-paste0(&quot;http://category.dangdang.com/pg&quot;,i,&quot;-cp01.00.00.00.00.00.html&quot;,sep=&quot;&quot;)
+    url_i&lt;-htmlParse(url_i,encoding=&quot;GBK&quot;)    #asText=TRUE,
+    node_i&lt;-getNodeSet(url_i,&quot;//li[@class]/div[@class=\&quot;inner\&quot;]/a&quot;)
+    Attr_i&lt;-sapply(node_i,xmlGetAttr,name=&quot;href&quot;)
+
+    for(j in Attr_i){
+        url_j=htmlParse(j,encoding=&quot;GBK&quot;)
+        node_title=getNodeSet(url_j,&quot;//div[@class]/img[@id]&quot;)
+        if(length(node_title)&gt;0){
+            title=xmlGetAttr(node_title[[1]],&quot;alt&quot;)
+            title=iconv(title,&quot;UTF-8&quot;,&quot;gbk&quot;)
+        }
+        else{
+            next
+        }
+
+        node_price=getNodeSet(url_j,&quot;//span[@id=\&quot;salePriceTag\&quot;]&quot;)
+        if (length(node_price)&gt;0){
+            price=as.numeric(xmlValue(node_price[[1]]))
+            }
+        else{
+            next
+        }
+        book_price=rbind(book_price,cbind(j,title,price))
+    }
+}
+colnames(book_price)=c(&quot;URL&quot;,&quot;书名&quot;,&quot;价格&quot;)
+write.csv(book_price,&quot;F:/book_price.csv&quot;)
+</code></pre>
+
+<h3>读入json 数据</h3>
+
+<p>json数据的一个典型的代表就是微博数据，然而除了微博外也有很多其他的网站因为json采用完全独立于语言的文本格式，但是也使用了类似于C语言家族的习惯使JSON成为理想的数据交换语言被许多的API使用。比如github的数据，Wikipedia article traffic statistics的数据也采用了json格式。<br/>
+我们以github的API数据为例，下面是我的github的代码仓库部分数据的json格式信息，完整版本在<a href="https://api.github.com/users/yujunbeta/repos">这里</a></p>
+
+<pre><code> {
+    &quot;id&quot;: 20472818,
+    &quot;name&quot;: &quot;courses&quot;,
+    &quot;full_name&quot;: &quot;yujunbeta/courses&quot;,
+    &quot;owner&quot;: {
+      &quot;login&quot;: &quot;yujunbeta&quot;,
+      &quot;id&quot;: 7315956,
+      &quot;avatar_url&quot;: &quot;https://avatars.githubusercontent.com/u/7315956?v=2&quot;,
+      &quot;gravatar_id&quot;: &quot;e8569ebac320c9aed1764a7d693e5a87&quot;,
+      &quot;url&quot;: &quot;https://api.github.com/users/yujunbeta&quot;,
+      &quot;html_url&quot;: &quot;https://github.com/yujunbeta&quot;,
+      &quot;followers_url&quot;: &quot;https://api.github.com/users/yujunbeta/followers&quot;,
+      &quot;following_url&quot;: &quot;https://api.github.com/users/yujunbeta/following{/other_user}&quot;,
+      &quot;gists_url&quot;: &quot;https://api.github.com/users/yujunbeta/gists{/gist_id}&quot;,
+      &quot;starred_url&quot;: &quot;https://api.github.com/users/yujunbeta/starred{/owner}{/repo}&quot;,
+      &quot;subscriptions_url&quot;: &quot;https://api.github.com/users/yujunbeta/subscriptions&quot;,
+      &quot;organizations_url&quot;: &quot;https://api.github.com/users/yujunbeta/orgs&quot;,
+      &quot;repos_url&quot;: &quot;https://api.github.com/users/yujunbeta/repos&quot;,
+      &quot;events_url&quot;: &quot;https://api.github.com/users/yujunbeta/events{/privacy}&quot;,
+      &quot;received_events_url&quot;: &quot;https://api.github.com/users/yujunbeta/received_events&quot;,
+      &quot;type&quot;: &quot;User&quot;,
+      &quot;site_admin&quot;: false
+    },
+    &quot;private&quot;: false,
+    &quot;html_url&quot;: &quot;https://github.com/yujunbeta/courses&quot;,
+    &quot;description&quot;: &quot;Course materials for the Data Science Specialization: https://www.coursera.org/specialization/jhudatascience/1&quot;,
+    &quot;fork&quot;: true,
+    &quot;url&quot;: &quot;https://api.github.com/repos/yujunbeta/courses&quot;,
+    &quot;forks_url&quot;: &quot;https://api.github.com/repos/yujunbeta/courses/forks&quot;,
+    &quot;keys_url&quot;: &quot;https://api.github.com/repos/yujunbeta/courses/keys{/key_id}&quot;,
+</code></pre>
+
+<p>R的jsonlite包提供了函数fromJSON来读取JSON数据。以我的github的JSON数据为例：</p>
+
+<pre><code class="r">library(jsonlite)
+jsonData &lt;- fromJSON(&quot;https://api.github.com/users/yujunbeta/repos&quot;)
+</code></pre>
+
+<p>我们可以通过操作jsonData来获取我的github的相应信息：</p>
+
+<pre><code class="r">names(jsonData)#获取JSON数据的一级结构，类似于hush表的关键字
+</code></pre>
+
+<pre><code>##  [1] &quot;id&quot;                &quot;name&quot;              &quot;full_name&quot;        
+##  [4] &quot;owner&quot;             &quot;private&quot;           &quot;html_url&quot;         
+##  [7] &quot;description&quot;       &quot;fork&quot;              &quot;url&quot;              
+## [10] &quot;forks_url&quot;         &quot;keys_url&quot;          &quot;collaborators_url&quot;
+## [13] &quot;teams_url&quot;         &quot;hooks_url&quot;         &quot;issue_events_url&quot; 
+## [16] &quot;events_url&quot;        &quot;assignees_url&quot;     &quot;branches_url&quot;     
+## [19] &quot;tags_url&quot;          &quot;blobs_url&quot;         &quot;git_tags_url&quot;     
+## [22] &quot;git_refs_url&quot;      &quot;trees_url&quot;         &quot;statuses_url&quot;     
+## [25] &quot;languages_url&quot;     &quot;stargazers_url&quot;    &quot;contributors_url&quot; 
+## [28] &quot;subscribers_url&quot;   &quot;subscription_url&quot;  &quot;commits_url&quot;      
+## [31] &quot;git_commits_url&quot;   &quot;comments_url&quot;      &quot;issue_comment_url&quot;
+## [34] &quot;contents_url&quot;      &quot;compare_url&quot;       &quot;merges_url&quot;       
+## [37] &quot;archive_url&quot;       &quot;downloads_url&quot;     &quot;issues_url&quot;       
+## [40] &quot;pulls_url&quot;         &quot;milestones_url&quot;    &quot;notifications_url&quot;
+## [43] &quot;labels_url&quot;        &quot;releases_url&quot;      &quot;created_at&quot;       
+## [46] &quot;updated_at&quot;        &quot;pushed_at&quot;         &quot;git_url&quot;          
+## [49] &quot;ssh_url&quot;           &quot;clone_url&quot;         &quot;svn_url&quot;          
+## [52] &quot;homepage&quot;          &quot;size&quot;              &quot;stargazers_count&quot; 
+## [55] &quot;watchers_count&quot;    &quot;language&quot;          &quot;has_issues&quot;       
+## [58] &quot;has_downloads&quot;     &quot;has_wiki&quot;          &quot;forks_count&quot;      
+## [61] &quot;mirror_url&quot;        &quot;open_issues_count&quot; &quot;forks&quot;            
+## [64] &quot;open_issues&quot;       &quot;watchers&quot;          &quot;default_branch&quot;
+</code></pre>
+
+<pre><code class="r">names(jsonData$owner)#获取所有者的基本信息
+</code></pre>
+
+<pre><code>##  [1] &quot;login&quot;               &quot;id&quot;                  &quot;avatar_url&quot;         
+##  [4] &quot;gravatar_id&quot;         &quot;url&quot;                 &quot;html_url&quot;           
+##  [7] &quot;followers_url&quot;       &quot;following_url&quot;       &quot;gists_url&quot;          
+## [10] &quot;starred_url&quot;         &quot;subscriptions_url&quot;   &quot;organizations_url&quot;  
+## [13] &quot;repos_url&quot;           &quot;events_url&quot;          &quot;received_events_url&quot;
+## [16] &quot;type&quot;                &quot;site_admin&quot;
+</code></pre>
+
+<pre><code class="r">jsonData$owner$login#获取登陆信息
+</code></pre>
+
+<pre><code>##  [1] &quot;yujunbeta&quot; &quot;yujunbeta&quot; &quot;yujunbeta&quot; &quot;yujunbeta&quot; &quot;yujunbeta&quot;
+##  [6] &quot;yujunbeta&quot; &quot;yujunbeta&quot; &quot;yujunbeta&quot; &quot;yujunbeta&quot; &quot;yujunbeta&quot;
+## [11] &quot;yujunbeta&quot; &quot;yujunbeta&quot; &quot;yujunbeta&quot; &quot;yujunbeta&quot; &quot;yujunbeta&quot;
+## [16] &quot;yujunbeta&quot; &quot;yujunbeta&quot; &quot;yujunbeta&quot;
+</code></pre>
+
+<h5>应用举例：分析Wikipedia读者搜索趋势</h5>
+
+<p>在股票交易中我们经常会听到“概念股”这样一个名词，那么什么样的概念最可能走红，什么样的概念股最有可能获得多数股民的购买呢，当然就是被议论的最多的，人们最关心的，比如习大大上台时提的“美丽中国”在当时很是红火，现在最近新闻里提及的“金融改革”估计也会成为新的股市宠儿。  </p>
+
+<p>我们这里使用<a href="http://stats.grok.se/">Wikipedia article traffic statistics</a>提供的数据来看看最近人们对某一概念的关注程度如何。当然，要获得人们关注什么，什么概念在股市中最红火，靠wiki的搜索指数是远远不够的，用下面的程序赚钱还是够呛。  </p>
+
+<p>我们这里以最近比较红火的数据科学这一概念为例，我们来看看人们对它的关注程度：</p>
+
+<pre><code class="r">url &lt;- &quot;http://stats.grok.se/json/en/latest90/data%20science&quot;
+raw.data &lt;- readLines(url, warn = &quot;F&quot;)
+library(rjson)
+rd &lt;- fromJSON(raw.data)
+rd.views &lt;- rd$daily_views
+rd.views &lt;- unlist(rd.views)
+df &lt;- as.data.frame(rd.views)
+head(df)
+</code></pre>
+
+<pre><code>##            rd.views
+## 2014-06-30      620
+## 2014-06-21      355
+## 2014-06-20      474
+## 2014-06-23      621
+## 2014-06-22      390
+## 2014-06-25      616
+</code></pre>
+
+<pre><code class="r">library(ggplot2)
+df$date &lt;- as.Date(rownames(df))
+colnames(df) &lt;- c(&quot;views&quot;, &quot;date&quot;)
+ggplot(df, aes(date, views)) + geom_line() + geom_smooth() + theme_bw(base_size = 20)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" /></p>
+
+<p>从图中我们可以看到data science最近真的是红火的不行，然而我们再来看看相关的statistic被人们关注的程度如何？</p>
+
+<pre><code>##            rd.views
+## 2014-06-30      288
+## 2014-06-21      212
+## 2014-06-20      233
+## 2014-06-23      258
+## 2014-06-22      236
+## 2014-06-25      319
+</code></pre>
+
+<p><img src="data:image/png;base64,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" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" style="display: block; margin: auto;" /></p>
+
+<p>显然statistic被人关注的程度真是少的可怜。类似的我们还可以看看big data，machine learning，statistical learning这些相近的词汇的关注度，这里我们不在赘述。</p>
+
+<h5>应用举例：《后会无期》能统计什么?</h5>
+
+<p>曾经见过网上一个有意思的评论：我们可以通过统计观看《小时代》的人数来统计究竟有多少脑残。当然，这只是一家之言。但是我们仍然可以利用关联规则的思想：如果”小时代“的状态里出现”脑残“的概率很高，那么就基本上可以相信那条评论很有道理。  </p>
+
+<p>为了避免一些不必要的争端，我们不妨利用微博数据来看看国民岳父的《后会无期》究竟与什么相关，观影人数又能代表什么？   </p>
+
+<p>这里我们利用lijian大神的Rweibo包来看看：</p>
+
+<pre><code class="r">require(Rweibo)
+res &lt;- web.search.content(&quot;后会无期&quot;, page = 20, sleepmean = 10, sleepsd = 1)$Weibo
+
+require(Rwordseg)
+insertWords(&quot;后会无期&quot;)
+n &lt;- length(res)
+res &lt;- res[res != &quot; &quot;]
+words &lt;- unlist(lapply(X = res, FUN = segmentCN))
+word &lt;- lapply(X = words, FUN = strsplit, &quot; &quot;)
+wordfreq &lt;- table(unlist(word))
+wordfreq &lt;- sort(wordfreq, decreasing = TRUE)
+</code></pre>
+
+<p>现在我们来看看去掉一些单字词汇（如“你”，“是”之类）后的词汇频率超过20的大概有：</p>
+
+<pre><code>  TFBOYS     房间     今天     电影     偶像     手记     台湾 后会无期     遥控     大家     年轻 
+      64       39       33       32       32       32       32       28       26       24       24 
+    一起     战士     搭配   第一件     看看     商品     什么     知道       cn     http       ln 
+      24       24       22       22       22       22       22       22       21       21       20 
+      RP     每次     曝光     所以     先导     游戏   中英文     最后      
+      20       20       20       20       20       20       20       20       
+
+</code></pre>
+
+<p>从着些关联词汇来看，国民岳父的《后会无期》正在被最近风头正劲的TFBOYS演唱的《后会无期》取代，TFBOYS的《后会无期》成了新的热门。不过毕竟后会无期已经上演了那么长的时间，没有人会去温习那些经典的“道理”，因为大家都知道：无论你知道多少道理，仍有可能过不好这一生。那么目前跟电影《后会无期》相关的东西可以肯定的就只有”电影“本身以及电影9月的”台湾“之行。  </p>
+
+<ul>
+<li>Useful link:
+
+<ul>
+<li><a href="http://jliblog.com/app/rwordseg/comment-page-1">Rwordseg的相关信息，例子</a></li>
+<li><a href="http://jliblog.com/app/rweibo/comment-page-3#comment-396518">Rweibo的相关信息，例子</a></li>
+</ul></li>
+</ul>
+
+<p>我们不仅可以读入JSON数据也可以通过函数toJSON将数据框写为JSON格式，例如将鸢尾花数据集写为JSON格式(输出结果较长，在此从略)：</p>
+
+<pre><code>data(iris)
+toJSON(iris, pretty=TRUE)
+
+</code></pre>
+
+<h3>读入数据库</h3>
+
+<p>对于大数据，我们自然不能用Excel之流存放，通常我们将它们存在数据库中，一个比较优秀的数据库软件就是MySQL，可以让我们读取查询数据库中的相关内容。R中的RMySQL包提供了这么一个读取MySQL数据的办法，并可以使用SQL语句对数据进行查询。<br/>
+一些有用的函数：  </p>
+
+<ul>
+<li>dbConnect：连接数据库</li>
+<li>dbDisconnect：取消数据库连接</li>
+<li>dbGetQuery：执行一条SQL语句，将查询结果写为一个数据框</li>
+<li>dbListTables：列出数据库中的表的名称</li>
+<li>dbListFields：获取列表的每一列的名称</li>
+<li>dbReadTable：读取数据库中的一张表</li>
+<li><p>dbSendQuery：执行一条SQL语句，返回一个数据库对象  </p></li>
+<li><p>Useful link: </p>
+
+<ul>
+<li><a href="http://blog.fens.me/r-mysql-rmysql/">RMySQL数据库编程指南</a></li>
+</ul></li>
+</ul>
+
+</body>
+
+</html>
+
