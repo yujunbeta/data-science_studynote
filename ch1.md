@@ -203,16 +203,27 @@ library(XML)
 
 url <- "http://www.bbc.com/news/entertainment-arts-28761353"
 SOURCE <-  getURL(url,encoding="UTF-8") #Download the page
+```
+
+```
+## Error: transfer closed with 78288 bytes remaining to read
+```
+
+```r
 #this is a very very long line. Let's not print it. Instead:
 substring (SOURCE,1,200)
 ```
 
 ```
-## [1] "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML+RDFa 1.0//EN\" \"http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd\">\n\n\n<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:og=\"http://opengraphprotocol.org/schema/\" xml"
+## Error: 找不到对象'SOURCE'
 ```
 
 ```r
 PARSED <- htmlParse(SOURCE) #Format the html code d
+```
+
+```
+## Error: 找不到对象'SOURCE'
 ```
 + 获取HTML的元素   
 
@@ -223,8 +234,7 @@ xpathSApply(PARSED, "//h1")
 ```
 
 ```
-## [[1]]
-## <h1 class="story-header">Robin Williams: Obama leads tributes to actor, dead at 63</h1>
+## Error: 找不到对象'PARSED'
 ```
 这样的标题由于含有HTML标记，让我们很不爽，我们可以通过下面函数来去掉它：
 
@@ -233,7 +243,7 @@ xpathSApply(PARSED, "//h1",xmlValue)
 ```
 
 ```
-## [1] "Robin Williams: Obama leads tributes to actor, dead at 63"
+## Error: 找不到对象'PARSED'
 ```
 相应的函数调用格式如下：
 ```
@@ -268,12 +278,12 @@ head(targets)
 ```
 
 ```
-## [1] "http://www.bbc.co.uk/news/blogs-echochambers-28747713" 
-## [2] "http://www.bbc.co.uk/news/uk-scotland-22207042"        
-## [3] "http://www.bbc.co.uk/news/in-pictures-28743753"        
-## [4] "http://www.bbc.co.uk/news/science-environment-28744469"
-## [5] "http://www.bbc.co.uk/news/technology-28754235"         
-## [6] "http://www.bbc.co.uk/news/world-europe-28755656"
+## [1] "http://www.bbc.co.uk/news/world-europe-28755656"       
+## [2] "http://www.bbc.co.uk/news/business-28767854"           
+## [3] "http://www.bbc.co.uk/news/blogs-echochambers-28747713" 
+## [4] "http://www.bbc.co.uk/news/uk-scotland-22207042"        
+## [5] "http://www.bbc.co.uk/news/in-pictures-28743753"        
+## [6] "http://www.bbc.co.uk/news/science-environment-28744469"
 ```
 然而，对于上面那篇文章，"//a[@class='title linktrack-title']/@href"是找不到任何东西的。进一步地，对于每一个链接，如果我们还想知道标题与日期，我们可以使用sapply函数：
 
@@ -294,23 +304,113 @@ t(sapply(targets[1:5,],bbcScraper2))
 ```
 
 ```
-##      [,1]                                                   
-## [1,] "Conservatives misguided after Ferguson shooting"      
-## [2,] "Q&A: Edinburgh's giant pandas"                        
-## [3,] "In pictures: Framing Hope"                            
-## [4,] "Rising economies 'ahead on climate'"                  
-## [5,] "Google helps build 'Faster' cable under Pacific Ocean"
+##      [,1]                                                 
+## [1,] "Pope Francis faces greatest challenge yet in Asia"  
+## [2,] "Alibaba sells off loan business ahead of share sale"
+## [3,] "Conservatives misguided after Ferguson shooting"    
+## [4,] "Q&A: Edinburgh's giant pandas"                      
+## [5,] "In pictures: Framing Hope"                          
 ##      [,2]                 
-## [1,] "2014/08/12 17:05:25"
-## [2,] "2014/08/12 16:00:21"
-## [3,] "2014/08/12 14:55:21"
-## [4,] "2014/08/12 12:16:23"
-## [5,] "2014/08/12 11:54:11"
+## [1,] "2014/08/13 01:51:58"
+## [2,] "2014/08/13 01:18:39"
+## [3,] "2014/08/12 17:05:25"
+## [4,] "2014/08/12 16:00:21"
+## [5,] "2014/08/12 14:55:21"
 ```
 + Useful link：
  - [Xpath的相关介绍](http://www.w3schools.com/xpath/default.asp)
  - [XML的相关介绍](http://www.w3school.com.cn/xml/index.asp)
  - [HTML的相关介绍](http://www.w3school.com.cn/html/index.asp)
+ 
++ 读取网页表格  
+
+很多网站并不提供直接的数据下载，而是提供一个网页表格供你在线观看。那么我们有没有简单一点的办法把他们拽下来呢？readHTMLTable函数可以帮我们把东西轻而易举的办到，我们先来看看函数的调用格式：
+```
+readHTMLTable(doc, header = NA,
+              colClasses = NULL, skip.rows = integer(), trim = TRUE,
+              elFun = xmlValue, as.data.frame = TRUE, which = integer(),
+               ...)
+```
+我们以[保利地产的分红情况](http://money.finance.sina.com.cn/corp/go.php/vISSUE_ShareBonus/stockid/600048.phtml)为例来说明函数的使用：
+
+```r
+url<-"http://money.finance.sina.com.cn/corp/go.php/vISSUE_ShareBonus/stockid/600048.phtml"
+data<-readHTMLTable(url,header=NA, which=19)
+data
+```
+
+```
+##           V1 V2 V3   V4     V5         V6         V7         V8     V9
+## 1 2014-05-16  0  5 2.94 瀹炴柦 2014-05-22 2014-05-21         -- 鏌ョ湅
+## 2 2013-05-28  0  0 2.32 瀹炴柦 2013-06-03 2013-05-31         -- 鏌ョ湅
+## 3 2012-06-12  0  2 2.15 瀹炴柦 2012-06-18 2012-06-15         -- 鏌ョ湅
+## 4 2011-05-11  0  3 2.13 瀹炴柦 2011-05-17 2011-05-16         -- 鏌ョ湅
+## 5 2010-04-21  0  3    1 瀹炴柦 2010-04-27 2010-04-26         -- 鏌ョ湅
+## 6 2009-04-24  3  0 1.32 瀹炴柦 2009-04-30 2009-04-29         -- 鏌ョ湅
+## 7 2008-03-05  0 10  0.7 瀹炴柦 2008-03-11 2008-03-10 2008-03-12 鏌ョ湅
+## 8 2007-03-27  0 10  0.3 瀹炴柦 2007-04-02 2007-03-30 2007-04-03 鏌ョ湅
+```
+对于中文来说，出现了乱码，这是我们不希望看到的，一个简单地办法就是将文件写入一个txt文件，再重新读取出来，即：
+
+```r
+write.table(data,"F:/table.txt")
+read.table("F:/table.txt",encoding = "UTF-8")
+```
+
+```
+##           V1 V2 V3   V4   V5         V6         V7         V8   V9
+## 1 2014-05-16  0  5 2.94 实施 2014-05-22 2014-05-21         -- 查看
+## 2 2013-05-28  0  0 2.32 实施 2013-06-03 2013-05-31         -- 查看
+## 3 2012-06-12  0  2 2.15 实施 2012-06-18 2012-06-15         -- 查看
+## 4 2011-05-11  0  3 2.13 实施 2011-05-17 2011-05-16         -- 查看
+## 5 2010-04-21  0  3 1.00 实施 2010-04-27 2010-04-26         -- 查看
+## 6 2009-04-24  3  0 1.32 实施 2009-04-30 2009-04-29         -- 查看
+## 7 2008-03-05  0 10 0.70 实施 2008-03-11 2008-03-10 2008-03-12 查看
+## 8 2007-03-27  0 10 0.30 实施 2007-04-02 2007-03-30 2007-04-03 查看
+```
+看表格很完整的展现在我们面前了。  
+##### 应用举例：中超预测
+虽然中国足球没什么看点，但是还是有一些槽点，对于买彩票的如果没有假球的话还有一些竞猜的价值。我们想要推断首先就得从网上获取相应数据，我们还是用简单的readHTMLTable函数从网易载入中超赛程数据：
+
+```r
+library(XML)
+
+CslData <- readHTMLTable("http://cs.sports.163.com/fixture/", header = T)
+CslPoint <- CslData[[31]]
+CslData[[31]] <- NULL
+CslFixture <- do.call(rbind, lapply(CslData, function(x) subset(x[, 3:5])))
+colnames(CslFixture) <- iconv(colnames(CslFixture), "UTF-8")
+colnames(CslPoint) <- iconv(colnames(CslPoint), "UTF-8")
+head(CslFixture)
+```
+
+```
+##            主队  比分       客队
+## NULL.1 山东鲁能 1 - 0 哈尔滨毅腾
+## NULL.2 广州恒大 3 - 0   河南建业
+## NULL.3 北京国安 1 - 0   长春亚泰
+## NULL.4 江苏舜天 0 - 0   贵州茅台
+## NULL.5 杭州绿城 1 - 1 大连阿尔滨
+## NULL.6 辽宁宏运 1 - 1   上海上港
+```
+
+```r
+head(CslPoint)
+```
+
+```
+##   名次     球队 比赛 积分
+## 1    1 广州恒大   20   45
+## 2    2 北京国安   19   41
+## 3    3 广州富力   19   34
+## 4    4 上海上港   19   31
+## 5    5 贵州茅台   19   30
+## 6    6 山东鲁能   19   28
+```
+这样我们就得到了中超的数据，之后就可以利用我们之前在博客里讲的[MCMC](http://blog.csdn.net/yujunbeta/article/details/21303341)，[logistic](http://blog.csdn.net/yujunbeta/article/details/17926443)，[SVM](http://blog.csdn.net/yujunbeta/article/details/17023287)之类的办法去预测了。  
+
+这个例子节选自虎扑体育的[《恒大夺冠100%，卓尔降级99%——用R语言轻松模拟中超剩余比赛》](http://bbs.hupu.com/6159478.html),那篇帖子也给了一个简单地预测办法，虽然不见得准确，也可以为我们的预测提供一个思路。
+
 
 
 
@@ -490,7 +590,7 @@ colnames(df) <- c("views", "date")
 ggplot(df, aes(date, views)) + geom_line() + geom_smooth() + theme_bw(base_size = 20)
 ```
 
-<img src="figure/unnamed-chunk-16.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-19.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" style="display: block; margin: auto;" />
 
 从图中我们可以看到data science最近真的是红火的不行，然而我们再来看看相关的statistic被人们关注的程度如何？
 
@@ -504,7 +604,7 @@ ggplot(df, aes(date, views)) + geom_line() + geom_smooth() + theme_bw(base_size 
 ## 2014-06-25      319
 ```
 
-<img src="figure/unnamed-chunk-17.png" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-20.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" style="display: block; margin: auto;" />
   
 
 显然statistic被人关注的程度真是少的可怜。类似的我们还可以看看big data，machine learning，statistical learning这些相近的词汇的关注度，这里我们不在赘述。

@@ -406,14 +406,22 @@ library(XML)
 
 url &lt;- &quot;http://www.bbc.com/news/entertainment-arts-28761353&quot;
 SOURCE &lt;-  getURL(url,encoding=&quot;UTF-8&quot;) #Download the page
-#this is a very very long line. Let&#39;s not print it. Instead:
+</code></pre>
+
+<pre><code>## Error: transfer closed with 78288 bytes remaining to read
+</code></pre>
+
+<pre><code class="r">#this is a very very long line. Let&#39;s not print it. Instead:
 substring (SOURCE,1,200)
 </code></pre>
 
-<pre><code>## [1] &quot;&lt;!DOCTYPE html PUBLIC \&quot;-//W3C//DTD XHTML+RDFa 1.0//EN\&quot; \&quot;http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd\&quot;&gt;\n\n\n&lt;html xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot; xmlns:og=\&quot;http://opengraphprotocol.org/schema/\&quot; xml&quot;
+<pre><code>## Error: 找不到对象&#39;SOURCE&#39;
 </code></pre>
 
 <pre><code class="r">PARSED &lt;- htmlParse(SOURCE) #Format the html code d
+</code></pre>
+
+<pre><code>## Error: 找不到对象&#39;SOURCE&#39;
 </code></pre>
 
 <ul>
@@ -425,8 +433,7 @@ substring (SOURCE,1,200)
 <pre><code class="r">xpathSApply(PARSED, &quot;//h1&quot;)
 </code></pre>
 
-<pre><code>## [[1]]
-## &lt;h1 class=&quot;story-header&quot;&gt;Robin Williams: Obama leads tributes to actor, dead at 63&lt;/h1&gt;
+<pre><code>## Error: 找不到对象&#39;PARSED&#39;
 </code></pre>
 
 <p>这样的标题由于含有HTML标记，让我们很不爽，我们可以通过下面函数来去掉它：</p>
@@ -434,7 +441,7 @@ substring (SOURCE,1,200)
 <pre><code class="r">xpathSApply(PARSED, &quot;//h1&quot;,xmlValue)
 </code></pre>
 
-<pre><code>## [1] &quot;Robin Williams: Obama leads tributes to actor, dead at 63&quot;
+<pre><code>## Error: 找不到对象&#39;PARSED&#39;
 </code></pre>
 
 <p>相应的函数调用格式如下：</p>
@@ -474,12 +481,12 @@ targets &lt;- unique(xpathSApply(PARSED, &quot;//a[@class=&#39;title linktrack-t
 head(targets)
 </code></pre>
 
-<pre><code>## [1] &quot;http://www.bbc.co.uk/news/blogs-echochambers-28747713&quot; 
-## [2] &quot;http://www.bbc.co.uk/news/uk-scotland-22207042&quot;        
-## [3] &quot;http://www.bbc.co.uk/news/in-pictures-28743753&quot;        
-## [4] &quot;http://www.bbc.co.uk/news/science-environment-28744469&quot;
-## [5] &quot;http://www.bbc.co.uk/news/technology-28754235&quot;         
-## [6] &quot;http://www.bbc.co.uk/news/world-europe-28755656&quot;
+<pre><code>## [1] &quot;http://www.bbc.co.uk/news/world-europe-28755656&quot;       
+## [2] &quot;http://www.bbc.co.uk/news/business-28767854&quot;           
+## [3] &quot;http://www.bbc.co.uk/news/blogs-echochambers-28747713&quot; 
+## [4] &quot;http://www.bbc.co.uk/news/uk-scotland-22207042&quot;        
+## [5] &quot;http://www.bbc.co.uk/news/in-pictures-28743753&quot;        
+## [6] &quot;http://www.bbc.co.uk/news/science-environment-28744469&quot;
 </code></pre>
 
 <p>然而，对于上面那篇文章，&rdquo;//a[@class=&#39;title linktrack-title&#39;]/@href&quot;是找不到任何东西的。进一步地，对于每一个链接，如果我们还想知道标题与日期，我们可以使用sapply函数：</p>
@@ -499,29 +506,115 @@ targets&lt;-as.data.frame(targets)
 t(sapply(targets[1:5,],bbcScraper2))
 </code></pre>
 
-<pre><code>##      [,1]                                                   
-## [1,] &quot;Conservatives misguided after Ferguson shooting&quot;      
-## [2,] &quot;Q&amp;A: Edinburgh&#39;s giant pandas&quot;                        
-## [3,] &quot;In pictures: Framing Hope&quot;                            
-## [4,] &quot;Rising economies &#39;ahead on climate&#39;&quot;                  
-## [5,] &quot;Google helps build &#39;Faster&#39; cable under Pacific Ocean&quot;
+<pre><code>##      [,1]                                                 
+## [1,] &quot;Pope Francis faces greatest challenge yet in Asia&quot;  
+## [2,] &quot;Alibaba sells off loan business ahead of share sale&quot;
+## [3,] &quot;Conservatives misguided after Ferguson shooting&quot;    
+## [4,] &quot;Q&amp;A: Edinburgh&#39;s giant pandas&quot;                      
+## [5,] &quot;In pictures: Framing Hope&quot;                          
 ##      [,2]                 
-## [1,] &quot;2014/08/12 17:05:25&quot;
-## [2,] &quot;2014/08/12 16:00:21&quot;
-## [3,] &quot;2014/08/12 14:55:21&quot;
-## [4,] &quot;2014/08/12 12:16:23&quot;
-## [5,] &quot;2014/08/12 11:54:11&quot;
+## [1,] &quot;2014/08/13 01:51:58&quot;
+## [2,] &quot;2014/08/13 01:18:39&quot;
+## [3,] &quot;2014/08/12 17:05:25&quot;
+## [4,] &quot;2014/08/12 16:00:21&quot;
+## [5,] &quot;2014/08/12 14:55:21&quot;
 </code></pre>
 
 <ul>
-<li>Useful link：
+<li><p>Useful link：</p>
 
 <ul>
 <li><a href="http://www.w3schools.com/xpath/default.asp">Xpath的相关介绍</a></li>
 <li><a href="http://www.w3school.com.cn/xml/index.asp">XML的相关介绍</a></li>
 <li><a href="http://www.w3school.com.cn/html/index.asp">HTML的相关介绍</a></li>
 </ul></li>
+<li><p>读取网页表格  </p></li>
 </ul>
+
+<p>很多网站并不提供直接的数据下载，而是提供一个网页表格供你在线观看。那么我们有没有简单一点的办法把他们拽下来呢？readHTMLTable函数可以帮我们把东西轻而易举的办到，我们先来看看函数的调用格式：</p>
+
+<pre><code>readHTMLTable(doc, header = NA,
+              colClasses = NULL, skip.rows = integer(), trim = TRUE,
+              elFun = xmlValue, as.data.frame = TRUE, which = integer(),
+               ...)
+</code></pre>
+
+<p>我们以<a href="http://money.finance.sina.com.cn/corp/go.php/vISSUE_ShareBonus/stockid/600048.phtml">保利地产的分红情况</a>为例来说明函数的使用：</p>
+
+<pre><code class="r">url&lt;-&quot;http://money.finance.sina.com.cn/corp/go.php/vISSUE_ShareBonus/stockid/600048.phtml&quot;
+data&lt;-readHTMLTable(url,header=NA, which=19)
+data
+</code></pre>
+
+<pre><code>##           V1 V2 V3   V4     V5         V6         V7         V8     V9
+## 1 2014-05-16  0  5 2.94 瀹炴柦 2014-05-22 2014-05-21         -- 鏌ョ湅
+## 2 2013-05-28  0  0 2.32 瀹炴柦 2013-06-03 2013-05-31         -- 鏌ョ湅
+## 3 2012-06-12  0  2 2.15 瀹炴柦 2012-06-18 2012-06-15         -- 鏌ョ湅
+## 4 2011-05-11  0  3 2.13 瀹炴柦 2011-05-17 2011-05-16         -- 鏌ョ湅
+## 5 2010-04-21  0  3    1 瀹炴柦 2010-04-27 2010-04-26         -- 鏌ョ湅
+## 6 2009-04-24  3  0 1.32 瀹炴柦 2009-04-30 2009-04-29         -- 鏌ョ湅
+## 7 2008-03-05  0 10  0.7 瀹炴柦 2008-03-11 2008-03-10 2008-03-12 鏌ョ湅
+## 8 2007-03-27  0 10  0.3 瀹炴柦 2007-04-02 2007-03-30 2007-04-03 鏌ョ湅
+</code></pre>
+
+<p>对于中文来说，出现了乱码，这是我们不希望看到的，一个简单地办法就是将文件写入一个txt文件，再重新读取出来，即：</p>
+
+<pre><code class="r">write.table(data,&quot;F:/table.txt&quot;)
+read.table(&quot;F:/table.txt&quot;,encoding = &quot;UTF-8&quot;)
+</code></pre>
+
+<pre><code>##           V1 V2 V3   V4   V5         V6         V7         V8   V9
+## 1 2014-05-16  0  5 2.94 实施 2014-05-22 2014-05-21         -- 查看
+## 2 2013-05-28  0  0 2.32 实施 2013-06-03 2013-05-31         -- 查看
+## 3 2012-06-12  0  2 2.15 实施 2012-06-18 2012-06-15         -- 查看
+## 4 2011-05-11  0  3 2.13 实施 2011-05-17 2011-05-16         -- 查看
+## 5 2010-04-21  0  3 1.00 实施 2010-04-27 2010-04-26         -- 查看
+## 6 2009-04-24  3  0 1.32 实施 2009-04-30 2009-04-29         -- 查看
+## 7 2008-03-05  0 10 0.70 实施 2008-03-11 2008-03-10 2008-03-12 查看
+## 8 2007-03-27  0 10 0.30 实施 2007-04-02 2007-03-30 2007-04-03 查看
+</code></pre>
+
+<p>看表格很完整的展现在我们面前了。  </p>
+
+<h5>应用举例：中超预测</h5>
+
+<p>虽然中国足球没什么看点，但是还是有一些槽点，对于买彩票的如果没有假球的话还有一些竞猜的价值。我们想要推断首先就得从网上获取相应数据，我们还是用简单的readHTMLTable函数从网易载入中超赛程数据：</p>
+
+<pre><code class="r">library(XML)
+
+CslData &lt;- readHTMLTable(&quot;http://cs.sports.163.com/fixture/&quot;, header = T)
+CslPoint &lt;- CslData[[31]]
+CslData[[31]] &lt;- NULL
+CslFixture &lt;- do.call(rbind, lapply(CslData, function(x) subset(x[, 3:5])))
+colnames(CslFixture) &lt;- iconv(colnames(CslFixture), &quot;UTF-8&quot;)
+colnames(CslPoint) &lt;- iconv(colnames(CslPoint), &quot;UTF-8&quot;)
+head(CslFixture)
+</code></pre>
+
+<pre><code>##            主队  比分       客队
+## NULL.1 山东鲁能 1 - 0 哈尔滨毅腾
+## NULL.2 广州恒大 3 - 0   河南建业
+## NULL.3 北京国安 1 - 0   长春亚泰
+## NULL.4 江苏舜天 0 - 0   贵州茅台
+## NULL.5 杭州绿城 1 - 1 大连阿尔滨
+## NULL.6 辽宁宏运 1 - 1   上海上港
+</code></pre>
+
+<pre><code class="r">head(CslPoint)
+</code></pre>
+
+<pre><code>##   名次     球队 比赛 积分
+## 1    1 广州恒大   20   45
+## 2    2 北京国安   19   41
+## 3    3 广州富力   19   34
+## 4    4 上海上港   19   31
+## 5    5 贵州茅台   19   30
+## 6    6 山东鲁能   19   28
+</code></pre>
+
+<p>这样我们就得到了中超的数据，之后就可以利用我们之前在博客里讲的<a href="http://blog.csdn.net/yujunbeta/article/details/21303341">MCMC</a>，<a href="http://blog.csdn.net/yujunbeta/article/details/17926443">logistic</a>，<a href="http://blog.csdn.net/yujunbeta/article/details/17023287">SVM</a>之类的办法去预测了。  </p>
+
+<p>这个例子节选自虎扑体育的<a href="http://bbs.hupu.com/6159478.html">《恒大夺冠100%，卓尔降级99%——用R语言轻松模拟中超剩余比赛》</a>,那篇帖子也给了一个简单地预测办法，虽然不见得准确，也可以为我们的预测提供一个思路。</p>
 
 <h5>应用举例：获取当当网的图书定价</h5>
 
@@ -686,7 +779,7 @@ colnames(df) &lt;- c(&quot;views&quot;, &quot;date&quot;)
 ggplot(df, aes(date, views)) + geom_line() + geom_smooth() + theme_bw(base_size = 20)
 </code></pre>
 
-<p><img src="data:image/png;base64,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" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" /></p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAAFoCAMAAABNO5HnAAAAZlBMVEUAAAAAADoAAGYAOpAAZrYzZv86AAA6ADo6AGY6Ojo6ZmY6kNs9PT1mAABmtv9/f3+QOgCQ2/+2ZgC2///Hx8fT09PW1tbbkDrb29vb/7bb///l5eX6+vr/tmb/25D//7b//9v///+O1Yt1AAAACXBIWXMAAAsSAAALEgHS3X78AAAQcklEQVR4nO3dC3ujthIGYLUbsm3jtLtZWzmniZPw//9kQQhdRzADGGPzzdMmhB0P8htFCN+kasQqoa7dgL0EoFcKQK8UgF4pAL1SAHqlAPRKAeiVAtArBaBXCkCvFIBeKQC9UiwH/Q8ijotBB9tvhZz3wn4in0qly9JFZ5UstpRKJ1LbNEAzSgKaXxTQVABaEICO0wDNKAloflFAUwFoQQA6TgM0oySg+UUBTQWgBbF7aBWnXQ763cfbuyyY+ZKyFyg5kq7iNPRoRslt9+iR9oRtSgPQggB0nAZoRklA84sCmgpAC2Lv0ArQ8pKA5hcFNBWAFgSg4zRAM0oCml8U0FQAWhCAjtMAzSgJaH5RQFMBaEHsHjqwBDSzJKD5RQFNxR1AqxrQ8pKA5hcFNBWAFgSgAS0uCWh+UUBTAWhBABrQ4pKA5hcFNBWAFgSgAS0uCWh+UUBTAWhB7Bta1YCeUBLQ/KI3CP3xx6/m6+ezauKh2Tor9dvPOtwwAeiZ0J/Pv7fQH9+t6bnBbf/3G10Aeh50020N9Nl8reuvH0/N15cHv2ED0LOgz+qpI361oh+Pf7c//f7LbdhMQM8dozvolz+bIfqpH0KafW6jrdLEP297DmX/9zER+vP527+N9pMdlZuvbsOmoUcv06P7TUCTqQtDN+MyOXTUNaCXhf7+EydDMnUx6I612cT0jkxdcNbRijYnQ1ywkKkLDh0vzRSu7dX1q7JX3m7DBKDxoJK4JKD5RQFNBaAFAWhAi0sCml8U0FTcB7THBDSzJKD5RQFNBaAFAWhAi0sCml8U0FQAWhCABrS4JKD5RQFNBaAFAWhAi0sCml8U0FQAWhCABrS4JKD5RQFNxc1Dd4yAlpYENL8ooKkAtCAADWhxSUDziwKaCkALAtCAFpcENL8ooKkAtCB2vdK9Cr6+Y6V7dslt9+iR9vRtogLQggA0oMUlAc0vCmgqAC0IQANaXBLQ/KLXgHaagGaWBDS/KKCpALQgAA1ocUlA84sCmgpACwLQgBaXBDS/6Pah2491/Xi0n9ooCEDLoF/Vbz+/figllga0CPrrR/vRrurbvx+P7UegCwLQIujP54f2816fmi/+Y6NZAWgxtOnVXz8AzUufOnT8/qsdOczwUWgEHYCWngzNMiAvOBkyq06f3pkVsV6Dj+DmBaCFY7RY2Aag47SxHn2Wz6C7AHScNn4J3l6uPBWOPxCAjtNYj3U03Vo45wB0EzpMYz6o9PmsMI/mpc+ANqtx4kElZvpU6HaInjLzALSWQMuHjD4ALYKu0wWD2LF7aC2Fnjh6AFoOXWPWIYfWU6A/HjGP5ladDt0OHA/Bz90C7MS661iA3aUq4yyCflXJBbhdgD1fxhDrGfpUOXT26J1dgD1fmBMrdAapSot7dBL9Auz5UrNYczZInQRt+rAdmM3PBjpbPBmrKAepBzm0eU1H+7yhG0KMZb4ceLgu+O5Xuj8cTYS7xk+GD+YJ8Fc382BA1zV6tLBHf/349q+B9i83wNAxnN6kajl097qOVu8lhsbJsJQ+Ddr16M/n/trwjOndYPp7M4eecDK0Y/Tns7tsOeOCZTB9InT3SlIVPGloh+F83XUswN6l6knQ3QsOJrzkANCzrgz5sWdo6wxoaUkR9EkM3U40zBPgXeCBf146oKeXlEDrALoK0jB0MEpOhK7CNEAzSgqg9URo8x6WSQHoSvgCmgkvcKxrQAuh6/Y9WfIzYb1XaO2hqwnz6FfMOujdS0PX7eOigB5P1x66mnJlOGX02Dl0Jb4E7x6+k58P9witp0ObWcekGd6+oSv5U1kT3idkYofQ2kFXePRuUkkpdIWHSaeV5EFrQM8tKYSu8MD/xJIsaA1om5vet0tBV3t/Kuuy0BrQfe5K0NXun5y9KLQGtMtdB7qSPzk7L/YFrQHtc1eBrjSgLwgdDtC7h1bpnQP0tqBVuWifHjoD+nLQGtBh7grQ5lE7QF8KOnYG9GRoVSw6Ah2lAXqkZHezAejE2UPHaYAeKTkGrUvQSVVAj5Qcgc6ce+i06uWgpy9rfpkF2JVfEF1ScvBmbycXld88HU6nrCp69EjJwR59zDt016PzqoAeKTkErY+5s4EmqgJ6pKQy/8mgU0VAM0oOQGsP7Z0b6EwR0Fnk978MrT104KxPeZW9QSf3bia09tCh8+6h23vGgE4B7M3yXF2Cfgf0OLR640LrADpyrgE9Gbr5kubqADp2BnTNgrY5LpOG1gF04gzoejloXYK2ZQE9lqjeHG2/p/sS5eoQOnUGdC2AVkPQOoROB447gVZjacWiLGhVM6BD2WPuDOjs5nzoWvlcQ+o+kCN3BnR28wK0uRYsQusQujrmzoDObl6GDh4WiaF172zf7X3Mne8EWo2kFYsuAq0j6Cp49C54pP8eoJMH4FaG9r330L859pg7A7omoOMdqh6A1pGzfXNsBG3/3ABdJ3fvPa0XQLt/sN8POoHu3uLWQ5uPUasBXYug66Dz2286hbbvvLLQ0XX7vUKbvjReNHkIwyQedPwyuRJ0kGahK7vraG+7C+g6mYzkXdcPBX0HNXE66IiQhvajRezsoev413KL0EFrStAqy1QZfQCdDrUR4UH7lvZ1o1y7Xbl9R/+34L5dE/qo839X9RToqIFl6Og30pAcclUSupULC7p/PQVpVZ6+HehMeujFsD10yFWATiYH/a1UPE8QQUddmIB2b6k36dHhtwCdUKev/yGvrWloPyoUoFvXdFQ95NCHk072saD9O72bjWN8+G1AO2r/tz0MHfXf99qd9wJoVccudrM7yx0Ovu/NhrYVquANyPqQjnEWOkNcG9oNaMqe1wNoYoIcXcu91/Hd6V4ndEhcCpsHYpyQQvvP/nI3UNnJpOs9G4BOTtHToU0xErr3S7SO49A+rQBdVdG+2jwhE7FtB1rrsFGD0PElhoMOZI5xb5RBH7QQuqrif6o3Dq0paGLelkFHI8Hq0FWVHD5qXfg9e43ftaAPvpFD0Mk4cdKXgo7KlqCrJC+e1oXf1ZagtX18YBQ6OxvNhI5uwIeuqlOyK+HaMLRux5AQOjz0W/Bw2eH60FV0+IN3zq9LldrM0EHdVQftBJeBDiZ1NHTVxwB0VekUOuW6GWh7heH+hRBcErqKfM2+/scMunJvh/XQGZcKd9w+dDZplkNHvPnQUbkpnPuNaHd4B51zRWrbhx6cIM+C9j144Ojd76MKw6d76IhoBehuyaH2k6UZK90Hs6p1of0IMXAyJM6Z/c4cOpkexZN9E+/ZuwZmQXdLzNa8hSOj6WuwnfzxktB286RzVRo67JJjJ0MxdL06dL+KL2spVCY02VU50NHfO2/WcdBToFOiFaBfrShrcd8j0fMWgM4mZ1HRxaHtaXBl6Jc/myH6iVq3uq2SLMB+tAuSN+G3gu2BDXKfHR6oYuEu+9PwIdk3Pb4pc2dUuKw6setNxT8yF2AvRLeo8stTzVqAndujqcE37tHh/Fcfo2L9t6xHH/QSPdrhrNyjTTT9d1lou5VBx1cY7vexHnT/TNqVoJtxmbXSPf1UyDh04EueDBeCzofyFLq+NvT3n7yToQi6ovrvKR9NpkCH593TQFoEXdfXg+5Ym/7Lmt6xoAPeSJCA7jv+OtD1NaE70eZkyLpgKUHH17sFwStDW72rQZuFysyq7IyV7t3DnlUc2fPQS0ObvQm0u6PRix1K0L2ex7nGGD0UYWHqQR2tiSf8Lwsd3sEU2j4enkA7jhuBPgYOw9BWZQK0mzoUoJM7SEMHL8dUYXYAHQkBOtwZCS4MTey78ssNKGhq51zo5G3b7slIQC8G3f8VA/pS0FHTdw8dXOamXrnqOHTX/qi1/V1OoZW7r8EdbL+9R2kUtK+/C2iz7+QvHlw7AV3Xy0HbRr3HLSOge5ph6GAyPAztb1rXdwltGpYL3hJ0FhuD9g0AtCAk0GkDAC0INnR8zFuEjpuxSej8mPOgEz+zc5fQkTPV8uWhbc4odPL7uCPomoQ2P06Dtqh7h/aPWCZTjM1Chw93FqHj30d+fFf1KtDR0RaENl+nQOdDOTmVyLrvxqHjoxFaxK7J0Pa7HDqKW4ROjzYJmur4Nkag/UHvHDo7Gg86bRig+6ChiaNdFrqPpaDjQ24Wmik4Lc0GoPP1Sa4Gnc8D1VToOn3PytWhs1ZuCjpLo4reAjTRym4qwcTfLnS6pMh1oYkG1fcCvaUe3dWmoLN9NLRKm78l6NHjrwZtf/EsaLr7AroYBHTeJhpape1X+YozgO6DB00c79LQjmsCdPo5qNuEzoOGVlk+AU2NMLYouXcRaFb6TUMTzZ8DrYqJu4LO8xeGVuXEu4UmdhLQNaDLMRmazl92jC4m3it0YT8LOp0BDBfllKTTBopuA3pw/XjpevNz0i5VUlb1Znt0sezuevRIe9oA9AIB6DgN0IySgOYXBTQVgBYEoOM0QDNKAppfFNBUAFoQgI7TLgcdhPpHFsx8SdkLlBRWvRT0nKrMfEnZC5ScVRXQogD0GiVnVb0MNCILQK8UgF4pVoe+meF44ZhzdBVGsod3xIF8ZlqaOpDLTCNvMZjOSpv9a1bkD+Hejz/aD+T1q16owXy3FIayN+SWHS2p3I04JePX+hWrmjRO1ctDfz6bTz52q14MQ/tPllX2huNlR5rQl1TuRpyWjkHbqiaNU/Xi0M0v3hzIf6L3UH7wWcn9DcfLDjfBlVSCkqPQfVXFbejC0NkYdVZPXcNfH1QcZP7H49+ctLCsNSmeJtwHiqvmRgNnk6hkBl2qan57rhMNVJ0FndUlx6juQP2qF3GBdCP6PPvz0F9kWDY8+RRLmjR2yaeRHu2qtvs4Vef2aBXVLR/IrXpB3DrYiFZoGG9/Z6zCslRJk2aGUwaJbamis9KGdmmMqmtB95sjHSVsP6uj1FHiUEkutN0dd8NSVfXTJw9XXRiamkcGzf94TDpKNvQFf5FB+4fLqm7AHCn5K4YeaakyJUcbqn5xG7puj/7oekA5355juvbbuzHeo/3UsVwyhR5pqfr+c9mGzoRWcd3ygeyqF0mLSrMmZW9YSovLqvCulEo+1Ba6kEaWLN+xrqq9UmJAfywKTQy+/YG6ubGbdqhSvrkOsP2+hx4ra0+GqpAbXLA4aGbJBRu6GrRf9cInUPmv7QTB3XBUJSg7VLK/BBeWHICOG3pRaBVH9IdDllXJdiGfmZa3ZCyXmRY3YSidmZbmzg1Fbs7Ol5RdqGSiWUpnpo23B7FgAHqlAPRKcRfQH48PyZ7/XaUdQ3GX0Dn89QPQKwWgV4pbh26fSX3oYM2TqmZFS2Uv7V6I5xquFTcO/fHYov7VQp/thd/fPbR9Nrt9GH8DcePQL6ojbpfANQ/Fmx1dD39RT+7r9eO2oT8eTX999S/sODvoz2ez8+vHNrr0bUOfu+7qTn7toNFDd6OK8q8FuG7cD7Qdkh10P2YDeoEIoL9+mPPeOejRm5rj3TZ099IAM0Zb19dgjN5GV7Zx29D9JMNAt64vdujoXprRfj1vZH5349DdwPyXHTr6eXO796kftIM14q8ZNw5tfLsrQyP97f9mwHg1Hbvbs4n+fPvQNxOAXikAvVIAeqUA9EoB6JUC0CsFoFcKQK8UgF4p/gPPS4oiLXNAeAAAAABJRU5ErkJggg==" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" style="display: block; margin: auto;" /></p>
 
 <p>从图中我们可以看到data science最近真的是红火的不行，然而我们再来看看相关的statistic被人们关注的程度如何？</p>
 
@@ -699,7 +792,7 @@ ggplot(df, aes(date, views)) + geom_line() + geom_smooth() + theme_bw(base_size 
 ## 2014-06-25      319
 </code></pre>
 
-<p><img src="data:image/png;base64,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" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" style="display: block; margin: auto;" /></p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAAFoCAMAAABNO5HnAAAAaVBMVEUAAAAAADoAAGYAOpAAZrYzZv86AAA6ADo6AGY6Ojo6ZmY6kNs9PT1mAABmtv9/f3+QOgCQZgCQ2/+2ZgC2///Hx8fT09PW1tbbkDrb29vb/7bb///l5eX6+vr/tmb/25D//7b//9v///+L+VZWAAAACXBIWXMAAAsSAAALEgHS3X78AAAU9klEQVR4nO3dC2PbKBIAYHYbdfcuSttr1iZ3zav8/x95AgTM8BLYEhL2cLepo4xGoy8KetowQa1JY3sXcC+NoBs1gm7UCLpRI+hGjaAbNYJu1Ai6USPoRo2gGzWCbtQIulEj6Ebtaujv1BJtbWj4zWsi6C01d2yGWHAicSLvlVnXKZegF7MSdGlego5WVBJM0ARN0BdnJejSvAQdragkmKAJmqAvzrob9POXX9PXd8b++CngC9UIOhFXD/3OJPT7hCv/cy90I+hEXDX055OE/v3jcXr9/OBezG1TaJaLS+ftE/rly38m6I+v3+TrP/+xL+YfE3Qirhb646+fso+e/pm+eZ+gzQs589S+v27Y2JbJN26V0LKnkNC6V56+2hdzAG3RibhK6JcJmaAvSVwHrTqKZNch/HwE7eLqoF+Ybt9oZ1ib+MITFjq8q0186ZnhLics9wgtexHN+9LuFPzOoLONoBNxBJ2Py6Ql6Mqs2bhMWoKuzJqNy6Ql6Mqs2bhMWoKuzJqNy6Ql6Mqs2bhMWoKuzJqNy6Ql6Mqs2bhMWoKuzJqNy6Ql6Mqs2bhM2luGZpm4dF6CjlaUCSZo17aEZoKgbSPoRBxB5+MyaQm6Lms+LpOWoOuy5uMyaQm6Lms+LpOWoOuy5uMyaQm6Lms+LpOWoOuy5uMyaQm6Lms+LpOWoOuy5uMyaQm6Lms+LpP2nqBZKrQiaz4uk/auoBmLh1Zkzcdl0t4VNK6YoAuKSc5A0NFG0Ik4gs7HZdISdF3WfFwmLUHXZc3HZdLeETQTBJ0sJFVMcgaCjjaCTsQRdD4uk3Zn6DfQXt8qW34GNv0PxbH5v6uy1sddlJi26HxcJi11HXVZ83GZtARdlzUfl0lL0HVZ83GZtARdlzUfl0lL0HVZ83GZtARdlzUfl0lL0HVZ83GZtARdlzUfl0l7Z9CwZIIuKCY5A0FHW0toBr7m8hJ0tKJ0MEGDti20qY+gCZqgl0sg6LkRNGgEnYjrGJoRdK6QVDHJGRLQ9oFdgl67cnBl4xVUStAEDeMIOh+XSUvQVVkX4jJpCboq60JcJi1BV2VdiMukvXfocBUIOlpRMpigYTsAdLAOBB2tKBlM0LAdADpYCYKOVpQMRtCuUILeDdpfC4KOVpQMJmjYCDoRd3PQTBB0tpjkDAQdbQSdiCPofFwqtjpxLfRLMO56swHY7wpaDsWJhzFsN57hPUF/Pj3KkZQfdhmh856gVZPQe4w5e3fQL1NHsccA7OwVDMHOXsNXYdSBWjX0tO97FLuMC353W/TvH19+EXRt4kuOoyfWPQZgvz/oaQd4oJ0heHk70Jp12n4PdHgXgfZWo0NoN8r9cU5YbhNaPE+HcHKr3mEA9vuCXmoEnYgj6HxcKrY6cSfQFlkX+ArrRNDMm5TNWrD0VGx14puHZgSdqCgaHIPmnAs3aQ4l6KVikjNEoUduGkEnCkkVk5whhOb85KA5QW8FzTE0J+g1oZmF5j70CEMJeqmY5AweNA+h550iQRcVk5wBQ49R6JmaoAuKSc4AoWfVCDSfQ/uFlpeaP77OV5KW2wrQXg0Ammeguegb+oX98fP3D8ZKpa+H9t8a4aB5Fpp3Df37h7zczL78+vj65VdqebBtB61BbxX68+lBXoN+nL7Yu1XZdjV08M4IAz3yBWg+hbJgNTqCVlv17x87Q/NlaB6FZl1AS1/Zc6juI7U82K6FZomd4VgCfe4XWt6okk/MPLfaGcah5fZcAs0DaPkH0gW0lH7Qj4EVtW2gx1Lo0V+NXqA/n0qF57YJtLQcy6D9S9S9QMtH7UrPVVTbAprHoAfVPOgxuBfQDbTcH6rHGgvbCtBeEW88Aq2JOZf/YmiOV6MjaKE267Jjji2gzyH0MDjcwYfmol9o2VezNsfRATQPoQfUR5uN20LzbqEn5WYXlXxoHkDj3kJOGjxoeNOlH2jZRVcceawMzQNob/9n7RG0k+4FurjLMG1VaK0HoWdSD9pMd5Pt7a1eoIX/EONSWxOaB9ADOm0B0PJHCNrc3eoIuq73WA/adrwW2vXOBdDcrFBH0GKPow4eQIPeIQLNBw/anLr0BP3xtflxtHM00LB3jkGjI2p7w7YjaNlxPISTE20laOA4Q5tzlBHaYvXBg9anLp1Av7CaE/DtoO3mmoHmgz+tH+g9rt7p290Y2nXAIbT9bjwP/qRuoKvbKtCI8czRIUUW2m7T4MylG+h3Nh1wfPxdeNqyBjRmPM+d72XQYy/Q6pkOed+wsAu5dgB29vZ2Hs+4DWrKPHU8u9dnMGn+d8CTzuOUsYsB2F/Yg7oB/lJ45HH9Fu1vr2d8ESm/RZsdotuieR9btHyDvYJu9bgBCxjxKR+AFubgBEFzfNVjnDqPHqD1cx3SuNEDNMEGO5xj0G4WDnrvc/ibkTd1d4FmXlzpFv351OS5Dr9nGAYeQvu3BjxodDIuoU+FJewJbfroz6fC05broE8etNw4A+igTB8anozLk/cuoPWTpKz4puFV0NyDVt2tB83CMucTHAcNTsYVNA8XdTho/cBB+SMHa0LrAwgMrc9ocOL5IhSA5kOH0HXtGmiOoc39KQA9VxiBFhh6HBB0KH3P0BxDGyoAbSqMQcueGkCb2XuAlgca6ga4blsf3nEE7R4icNC2wig0w9DueFpCB9IEjbZHCA0qjEMLDG2Pp3eCZjjuMF0Hh9DAWeoB5xy0wNDmeFpB+9J3C619Tmg3CKFRhSnoNww9H093Aa3ew1LTLoTmEBrckjLQuMJS6Pn66omH0seDLj9XUW0FaHiTdYb2SkxCCw9a99M9QAv9uWDljytdBs0BtP9o3Rk+SieS0EznTUNj6QNCi/mNLBsedfA8tKiA9qTVzcZ+oIV8tGM7aA6hvcvP8q1W10DLjmiGRtLHhK7oPTLQMgkuRjeAevIfVuTyzYNL0PapmzeXzt1hHCw0lD4etL58V7w/zEHb9KhyiDqEDyKJWmgBU6idaw/Q6qij5ggvDz3nh5Uj5xPwMTTV0CIJDaSPB13zmJKfrwAaOXMP2gR70MHt1jw0OM90s2wNjd5p3fbMEFyxd5VjZw/aVl4AzVBeDH2KSDeA5iiuMXQAkoF2lVdDCwzNQ+n7gvadETSofAna/KECkRS0uaa9PfR4UGhlAaBh5RdAMwTtSbeA5jtD+zst5OygceWXQIsVoKOH/bkZBIAGK7EzdNBxOGhYxqXQAkJj6QbQ43GgI84GWqwCLSA0kp6OcW8XmoEXAbRROI12k4OVXwgt9oPmx4GOOWtor44S6PBESE9wN9VHeHvMQuPVXQ+aHwc61nFoaL+Oa6DtM5Mjvwhan2T1DI2dRwAd1HEVNHPQ8K1EG0PzQ0BPr96wMwfQYR3XQeuVHvEjDOOoQ9k20Lw5NIu+ZuCxgNnZSJ9YGO5Dpz5gTSxBgze4jHxDaH4UaPiM3HznykC/RqG9ouqgRQyaj+XQwSceZmYQ9k78AaD5/BYItx+00KIMOnmyHIUWFho+j3dWP90A+rwzNHCG0AMH0AKOr8IMw9XQQn0ChQ9t3r8M2hrQ/CjQPA0tMLRZweuhmT2aHgC0Ov/MQusKqqD5WtDqDqK66VIyAPsitFlxc56CRgxaAXr+6j0LXA6t/78DtPrgXfWWw6LxDENoHoEe+dbQ4CO+BwctJWBXtQI0XwvaDnxaOEInWg9hHwU4Q2d9hsz9GcR10HOnYV7GodHHiTH/lq9VLobmCNolv7SPloP7lo0560FzDO32Tea3vxm0u4tonuX1tzqG/wrspOnLW0rFK4OvDf0MBk/OD8COh0k/zW3U/wzgWxbMAL6JDLG+3BgOtUudFjvOCx3l/0E8C2tmFQO6n2CDK6XaBdDv096wcFxwtHXYQ40Rv8MV/PKLtmhRu0WraHeebz4rYf7HxV+3Rc/Z19ui382+sBKae9B6R6hXWLSHHu0v2V4vNLtOkKIc2mRfDfpdHd0VDsAOoJ0z+BSC+QO4RRxaT10JGnwKiH4/rj2NsVfAr4G2ydeCftFH0dU7Q/g4nYR2pw7wPcctoa2Hpmbz0sHRHJv/K4B2K7cS9Mv8FtrKwzu3RgloQ7IhtPubkvcAPGiehU6x2DLAyoHEKK72ONo8ilc2ALs7TfGggyO7ptB8sBcQRzfRQNvlFUODdVsJ+kW/5VC6Fg3A7k5TILS9rQSe/GoADd7gEoXWV8OLod3j3nDVVoJebhFovEKywY+YQguOQkdqugwavBtgiEKPPIDWaaPQ+Cxsf+jQGULjBe8HLf89zT1ZFbTnvB+0t+EoZ7B2eMEbQ4Ni/M9tc9Cc+8Pm+NA2NQuY94P21kdvz2Pg3BJaLf084MIQ9IgfLsF3LeeumcFzoCj0gMrd+C44XA/rvA+0ldbQ3ue2KWhzC2KeGIVmwm3NWeih5RbNF6D9BW8ObY80z+5ieBLabAhR6JHnoYeWXccpAg0/ZjRYcFNo9JbGBDRH41GqLNxekfKgRwCt3saHyr03aAGgJccytP0gCzcxAa2unswXzNruDCPQ8O8VLqwZtADQ+ACoHNqLQ7+Bs/v9oXIbQ6PPjw8XvDI0Q9ExaPuRQgvQ6MQmDz3Yv1lU7o7QaFmrQ4NTPAwtEPQISiqBnreRJDQcKAaV2xYaXeNYhtZXGtaGZhia203Qg7aMEWgvwrwezUUUghYhtD3iPGHiDPT8DxwbTb6Uo9IdAhpfTNoNGjx+YaSHNaDV7+sI0GioA39Z6ru9oHX/kYP2++0Qeu6BjgYdLKoltAih5W7sGmi7EzwANBwlJVxUEjpW0rXQIgINzl8qoeXgt/bHBL0MfeIDPDorhEYfmrMbNKgPvCtqjCyqLbSIQ+vNswbaH2Bx3B0afjojOD3GSz4AtLEugh7gcdQxoNGnYO4Dbb7V55sZaHUIMeSh9bDk/onvwaCjfhtAmzmj0MHntiFoS2kfthnxT/QWfTxo5HwM6OBz2zxoc5IVNhsWfNbW7tCo49gZmpnQMmi8RaMu+njQ6ONzhT4H2R8aPtmjvmahvWkpaJgPlXss6NjEDaEFvy1o9DnFai0roKNvEF4LWqwCjSb2CS21NoU2T/PeBDT6nGK9lgeCZjcDjT+nWK9lOXThh/LodhG066kJOmgl0O49ElloLb0e9NnFoXK3hvbGcdTTjwY9dyAXQuNpCnoEKysI2ltw39ADqmWeXrMzbActXm8ROka6NrQfvQiNRwiIQGPTI0EPqGYzvRxaNIYW4JM2nV0aOiz6zQ1PjMq9J2i4jDS0/nYRWs8Q9oFvkcsGm0DDgcdPAxow3f2AyYHWcWP2y1ojn9tkr2iKvww38RVNY294GHg1CLxfBovUHK5cyQDs1dDwmxO+/Wand7BFw1re7MRgS41s0SJcuSaHd5Hj912hmR9K0CY4Mo2gM9CwmNjnFEV2Ijo4Mq0IOowmaLPoo0BjwD6gzWERKoagCdpOvBg6XIuW0LiYTqHDLfVg0N4GfSxoN/UWoL1ijgbN/Kzl0P40ghbNoKMFtIEOimGHhwalEHRJqCBorx0LGlbSD3RYTGQ5DaBB13sBdLh1EHQq2rks7wzDtIeHjhRD0PFSy1sIPfXQx4a2UxNZHXSY+FDQsWIIOrGs4tYjtOkTuocOkh4N+ja26Mgx8+Ggs1n7gQ6COoWOzRBsRTtChy0FHQzQoYPDRtAhdCwoWjlBVzWCTiTeGjoadEvQJcEEXZSVoMvy3gd0PGg3aLd+dwwtNzeCLm7XQMcH7SXoaMPQiSCCJuiKtASdib5R6LrKu4QuCibooqwEXZj32qwEXZi3V+iPv9UgkSUDsFdCX01yU9CfT2o0zrLxDBM5CHoZetp+JXThCJ2JJAS9CP3OHtVAvoVjziayEHRJH62hywZgr2plw5z32i6ELhwXPJFilU2kPG/PWzRB1yZes+sQfj6CdnGXQm+wM0zMcN/QWxzeJWa4b+gtTlgSM9w5dNkA7IkUBL3rRaXEDAQdbQSdiCPoxawEXZqXoKMVlQQTtPgOG/te2UpnqEu8TdbaxCtDX5etdIa6xNtkvS4xQTdKTNCNEq8LTS3ZCLpRI+hGrR10Z93x2u2SAhhs3pTCReVmKI0LgnPRpXHxefIzFMVd/Jtm0W/gVP2E0+eTXO6D98PIDO4BKDY/G1WSeKkMk5XZJ67KymXop+nEKq4k8XbQ8xNO+h6j/8NwBnA/gT39mascJV4ow2ZlZrbCcpegTeJpwicrSbwZ9PyEE7iNm50B3CEzcxYlzpfhsrKqrIvQNjErLXcl6KBvMk84iZcH3KfrkGAGec+3JA4lNiDJXYW7k8ym2TK7FC9rAJ1MPP0CHwF0OvFF0EG+aN+kF/D8rynsMcjgv0BPMbxn/xZhYtxNp7OquOKsj4tbtEssJ5YkvnSLZihfegGfT19+TeX70sEM6LmcEuhPZfec7zpUL6p+F6wwqymXxeOCcuWEd1ZSrrislULblwubCKq8aBPRLxncA2R+fYXQ5iVLxPmJGS5i+y06dvwIKp+6NG8TCTo9+LcIKl9KzL7BopJZPejFcn3oVGIfOp24zRb98RcT+RnM3kVX/mdxYvYT/CCZ1YfeodwLoZcKsQvQFQWlBDOY46W58n9ScX5i9g/4cTKrMNCpLiGeNb1+c2I2z1ngsAp0pO81C9CHxs9eBZEZ9BmAqfyfZFw8MUtEgxMWB71LuZtDT1WjLiu5qvIBKObmXCRRib8tQNvHqkqhvXLTgLjcTaAZbugPJp6Oea9TM5TGRapZjC6N8+rIzlAa58Ve2vzNdbUZ6hKvl9X75SdnKI1bronaeo2gGzWCbtS6h/74+uBN+e8udSy1m4MO4Y/RCLpRI+hGrWdoeSP1QcOqe6rqrUzyrERer3iO3W/YsXUM/fFVov5bQr/P533fDPR8i1xexT9I6xj6mWli+d5HdT1DTdBb+DN7tF+P0fqF/viqttcXZvvkdwv9+aQm/v5xnE26X+h3vbnanZ/sNAy07lXg/djd221Az12yhTZ9NkGv0AD07x9qv/cOtujDHeP1C62fDFB99Oz6Avro42zKc+sX2hxkKGjp+jx3HerJDHVk936g47uOoXXH/O+56zDHzXLqo+m0//i5nKZR6xha+eozQyX95X+qw3hRG7aecpjtuW/orhpBN2oE3agRdKNG0I0aQTdqBN2oEXSjRtCNGkE3av8HJ6G+r7MEuFIAAAAASUVORK5CYII=" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" style="display: block; margin: auto;" /></p>
 
 <p>显然statistic被人关注的程度真是少的可怜。类似的我们还可以看看big data，machine learning，statistical learning这些相近的词汇的关注度，这里我们不在赘述。</p>
 
