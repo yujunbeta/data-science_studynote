@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>第二章 数据的清理</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h1>第二章 数据的清理</h1>
+
+<p>由于我不是专业做数据清理的，所以我也不知道现实中的数据清洗最后要的结果是什么样的。但是如同列夫托尔斯泰所说的那样：“幸福的家庭都是相似的，不幸的家庭各有各的不幸”，糟糕的恶心的数据各有各的糟糕之处，好的数据集都是相似的。一份好的，干净而整洁的数据至少包括以下几个要素：<br/>
+1、每一个观测变量构成一列<br/>
+2、每一个观测对象构成一行<br/>
+3、每一个类型的观测单元构成一个表<br/>
+就像我们最常接触的鸢尾花数据：</p>
+
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+</code></pre>
+
+<p>每一列就是观测的指标：花瓣长度，花瓣宽度，萼片长度，萼片宽度，种类；每一行就是一株鸢尾花的观测值，构成整张表的元素就是四个数值变量，一个分类分类变量。  </p>
+
+<p>然而出于排版的考虑我们抓下来的数据往往不是那么的友好，比如说我们可以看到的数据通常是这样的：</p>
+
+<pre><code>##   religion &lt;10k 10k-50k 50k-100k
+## 1 Agnostic   12      31       23
+## 2 Buddhist   58      43       43
+## 3 Catholic   79      56       23
+</code></pre>
+
+<p>而不是：</p>
+
+<pre><code>##   religion   income freq
+## 1 Agnostic     &lt;10k   12
+## 2 Agnostic  10k-50k   58
+## 3 Agnostic 50k-100k   79
+## 4 Buddhist     &lt;10k   31
+## 5 Buddhist  10k-50k   43
+## 6 Buddhist 50k-100k   56
+## 7 Catholic     &lt;10k   23
+## 8 Catholic  10k-50k   43
+## 9 Catholic 50k-100k   23
+</code></pre>
+
+<p>当然，除了这种把列表每一列代表一些数值这种情况外，还有多个变量储存为一列(比如列表不仅以&quot;&lt;10k&quot;,&ldquo;10k-50k&rdquo;,&ldquo;50k-100k&quot;做表头，甚至还加上性别信息&quot;m&lt;10k&rdquo;,&ldquo;m10k-50k&rdquo;,&ldquo;m50k-100k&quot;，&quot;f&lt;10k&rdquo;,&ldquo;f10k-50k&rdquo;,&ldquo;f50k-100k&rdquo;,其中m代表男性，f代表女性)，还有更过分的将列表的变量不仅储存在列中，行中也有统计变量。  </p>
+
+<p>面对这些不好的table，我们首先要做的就是数据管理，将数据整理为一个干净的数据集。  </p>
+
+<h2>数据管理</h2>
+
+<p>按照en:DAMA的定义：“数据资源管理，致力于发展处理企业数据生命周期的适当的建构、策略、实践和程序”。这是一个高层而包含广泛的定义，而并不一定直接涉及数据管理的具体操作（如关系数据库的技术层次上的管理）。我们这里主要讲述对于数据的变量命名与数据的合并，旨在方便数据共享。  </p>
+
+<p>数据管理首先要做的就是大致上了解你的数据，比如有什么样的变量，每一行大致长成什么样，最常用的就是head(),tail().<br/>
+我们要做的基本上就是这么几项工作：  </p>
+
+<ul>
+<li>给每一个变量命名，而不是V1，V2，如果有必要可以给出code book。</li>
+<li>每个变量名最好具有可读性，除非过长，否则不要用缩写，例如AgeAtDiagnosis这个命名远好于AgeDx。</li>
+<li>通常来说，最好将数据放在一张表里面，如果因为数据过多，项目过杂，分成了几张表。那么一定需要有一列使得这些表之间能够连接起来，但尽量避免这样做。<br/></li>
+</ul>
+
+<p>我们以UCI的<a href="http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones">Human Activity Recognition Using Smartphones Data Set</a> 为例来看看数据是如何变成一个基本符合要求的数据。这个数据我们已经下载下来了，其中关于数据的详细信息可以参阅read me文档，由于UCI的数据通常都是一个基本合乎规范的数据集（主要是指它的数据集的变量名都是以V1，V2来命名的）加上一个code book。那么我们看看各个数据的名称（在feature文件里）</p>
+
+<pre><code class="r">setwd(&quot;F:/coursera/Data Science/peer assignment/get clean and tidy data/UCI HAR Dataset&quot;)
+name &lt;- read.table(&quot;./features.txt&quot;, stringsAsFactors = F)
+head(name)
+</code></pre>
+
+<pre><code>##   V1                V2
+## 1  1 tBodyAcc-mean()-X
+## 2  2 tBodyAcc-mean()-Y
+## 3  3 tBodyAcc-mean()-Z
+## 4  4  tBodyAcc-std()-X
+## 5  5  tBodyAcc-std()-Y
+## 6  6  tBodyAcc-std()-Z
+</code></pre>
+
+<p>我们可以看到各个特征的名称直接标在数据上是非常不友善的，我们为了让他具有可读性，我们以展示在我们眼前的6个数据为例：</p>
+
+<pre><code class="r">variablename &lt;- head(name)
+# 将标签中的大写字母转为小写，我们这里没有所以不再赋值，如果需要全变为大写，可以使用toupper
+tolower(variablename$V2)
+</code></pre>
+
+<pre><code>## [1] &quot;tbodyacc-mean()-x&quot; &quot;tbodyacc-mean()-y&quot; &quot;tbodyacc-mean()-z&quot;
+## [4] &quot;tbodyacc-std()-x&quot;  &quot;tbodyacc-std()-y&quot;  &quot;tbodyacc-std()-z&quot;
+</code></pre>
+
+<pre><code class="r"># 将变量名分离成3部分
+splitNames &lt;- strsplit(variablename$V2, &quot;-&quot;)
+splitNames[[1]]
+</code></pre>
+
+<pre><code>## [1] &quot;tBodyAcc&quot; &quot;mean()&quot;   &quot;X&quot;
+</code></pre>
+
+<pre><code class="r"># 将变量名合成有意的名称
+named &lt;- function(x) {
+    rr &lt;- paste(x[2], x[1], &quot;-&quot;, x[3], sep = &quot;&quot;)
+    chartr(&quot;()&quot;, &quot;of&quot;, rr)
+}
+sapply(splitNames, named)
+</code></pre>
+
+<pre><code>## [1] &quot;meanoftBodyAcc-X&quot; &quot;meanoftBodyAcc-Y&quot; &quot;meanoftBodyAcc-Z&quot;
+## [4] &quot;stdoftBodyAcc-X&quot;  &quot;stdoftBodyAcc-Y&quot;  &quot;stdoftBodyAcc-Z&quot;
+</code></pre>
+
+<p>用这样的名字给数据集命名就感觉舒服多了，我们将一些R中对字符串常用的操作函数总结如下，方便我们对数据名称的修改：  </p>
+
+<ul>
+<li>sub：替换字符串中的第一个模式为设定模式(pattern).</li>
+<li>gsub:全局替换字符串中的相应模式</li>
+<li>grep,grepl:这两个函数返回向量水平的匹配结果，grep仅返回匹配项的下标，而grepl返回所有的查询结果，并用逻辑向量表示有没有找到匹配。</li>
+<li>nchar:统计字符串单字数目</li>
+<li>substr:取子串</li>
+<li>paste:将字符串链接起来，sep参数可以设置连接符</li>
+<li>str_trim:去掉字符串空格</li>
+</ul>
+
+<p>变量的名称建议满足如下要求：  </p>
+
+<ul>
+<li>英文变量名尽可能用小写</li>
+<li>尽可能的描述清楚变量特征 (Diagnosis versus Dx)</li>
+<li>不要太复杂</li>
+<li>不要有下划线、点、空格<br/></li>
+</ul>
+
+<p>字符型变量应该满足：</p>
+
+<ul>
+<li>是因子类型的应该转化为factor</li>
+<li><p>因子尽可能具有一定的描述性 (例如：如果0/1表示真假，那么用TRUE/FALSE代替0/1；在表示性别时用Male/Female代替M/F)  </p></li>
+<li><p>Useful link：</p>
+
+<ul>
+<li><a href="http://blog.csdn.net/duqi_yc/article/details/9817243">R字符串处理</a></li>
+</ul></li>
+</ul>
+
+<p>接下来我们讨论数据集的合并，主要使用函数merge。<br/>
+我们以下面两个数据集的合并为例：</p>
+
+<pre><code class="r">df1 &lt;- data.frame(id = sample(1:10), reviewer_id = sample(5:14), time_left = sample(1321:1330), 
+    x = rnorm(10))
+df2 &lt;- data.frame(id = sample(1:10), answer = rep(&quot;B&quot;, 10), time_left = sample(321:330), 
+    y = rnorm(10))
+head(df1, n = 3)
+</code></pre>
+
+<pre><code>##   id reviewer_id time_left       x
+## 1  3           9      1326 -0.9232
+## 2 10           5      1322  2.5069
+## 3  1          14      1330  2.2478
+</code></pre>
+
+<pre><code class="r">head(df2, n = 3)
+</code></pre>
+
+<pre><code>##   id answer time_left      y
+## 1  1      B       329 0.8180
+## 2 10      B       327 1.4639
+## 3  9      B       323 0.8141
+</code></pre>
+
+<p>merge函数调用格式为：</p>
+
+<pre><code>merge(x, y, by = intersect(names(x), names(y)),
+      by.x = by, by.y = by, all = FALSE, all.x = all, all.y = all,
+      sort = TRUE, suffixes = c(&quot;.x&quot;,&quot;.y&quot;),
+      incomparables = NULL, ...)
+</code></pre>
+
+<p>参数说明：  </p>
+
+<ul>
+<li>x,y:两个数据框</li>
+<li>by, by.x, by.y:指定用于合并的列的名称。</li>
+<li>all,all.x,all.y:默认的all = FALSE相当于自然连接, 或者说是内部链接. all.x = TRUE是一个左连接, all.y = TRUE是一个又连接, all = TRUE 相当于一个外部链接.</li>
+</ul>
+
+<p>仔细观察下面3个例子你就会发现其中的奥秘：  </p>
+
+<pre><code class="r">mergedData &lt;- merge(df1,df2,by.x=&quot;reviewer_id&quot;,by.y=&quot;id&quot;,all=TRUE)
+head(mergedData)
+</code></pre>
+
+<pre><code>##   reviewer_id id time_left.x      x answer time_left.y       y
+## 1           1 NA          NA     NA      B         329  0.8180
+## 2           2 NA          NA     NA      B         330 -0.7706
+## 3           3 NA          NA     NA      B         325 -0.4851
+## 4           4 NA          NA     NA      B         322  0.1801
+## 5           5 10        1322 2.5069      B         328 -1.1717
+## 6           6  5        1328 0.7141      B         321 -0.4009
+</code></pre>
+
+<pre><code class="r">mergedData &lt;- merge(df1,df2,by.x=&quot;id&quot;,by.y=&quot;id&quot;,all=TRUE)
+head(mergedData)
+</code></pre>
+
+<pre><code>##   id reviewer_id time_left.x        x answer time_left.y       y
+## 1  1          14        1330  2.24783      B         329  0.8180
+## 2  2          12        1324  1.03181      B         330 -0.7706
+## 3  3           9        1326 -0.92317      B         325 -0.4851
+## 4  4           7        1321 -0.07841      B         322  0.1801
+## 5  5           6        1328  0.71411      B         328 -1.1717
+## 6  6          10        1323  0.65413      B         321 -0.4009
+</code></pre>
+
+<pre><code class="r">mergedData2 &lt;- merge(df1,df2,all=TRUE)
+head(mergedData2)
+</code></pre>
+
+<pre><code>##   id time_left reviewer_id       x answer       y
+## 1  1       329          NA      NA      B  0.8180
+## 2  1      1330          14  2.2478   &lt;NA&gt;      NA
+## 3  2       330          NA      NA      B -0.7706
+## 4  2      1324          12  1.0318   &lt;NA&gt;      NA
+## 5  3       325          NA      NA      B -0.4851
+## 6  3      1326           9 -0.9232   &lt;NA&gt;      NA
+</code></pre>
+
+<p>在plyr包中还提供了join，join_all，arrange等函数来实现表的连接，但我想merge这个函数已经足够用了，所以我们不在多说。当然，在极少数特别好的情况下（比如列的变量是一致的，或者行的观测个体是一致的时候）rbind,cbind也是有用的。   </p>
+
+<p>有些时候我们会遇到一些特殊的字符串：日期。R中提供了各式各样的函数来处理时间：</p>
+
+<pre><code class="r">Sys.setlocale(&quot;LC_TIME&quot;, &quot;C&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;C&quot;
+</code></pre>
+
+<pre><code class="r">x &lt;- c(&quot;1jan1960&quot;, &quot;2jan1960&quot;, &quot;31mar1960&quot;, &quot;30jul1960&quot;)
+z &lt;- as.Date(x, &quot;%d%b%Y&quot;)
+format(z, &quot;%a %b %d&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;Fri Jan 01&quot; &quot;Sat Jan 02&quot; &quot;Thu Mar 31&quot; &quot;Sat Jul 30&quot;
+</code></pre>
+
+<pre><code class="r">weekdays(z)
+</code></pre>
+
+<pre><code>## [1] &quot;Friday&quot;   &quot;Saturday&quot; &quot;Thursday&quot; &quot;Saturday&quot;
+</code></pre>
+
+<pre><code class="r">julian(z)
+</code></pre>
+
+<pre><code>## [1] -3653 -3652 -3563 -3442
+## attr(,&quot;origin&quot;)
+## [1] &quot;1970-01-01&quot;
+</code></pre>
+
+<pre><code class="r">transform(z, weekend = as.POSIXlt(z, format = &quot;%Y/%m/%d&quot;)$wday %in% c(0, 6))
+</code></pre>
+
+<pre><code>##       X_data weekend
+## 1 1960-01-01   FALSE
+## 2 1960-01-02    TRUE
+## 3 1960-03-31   FALSE
+## 4 1960-07-30    TRUE
+</code></pre>
+
+<h2>数据操作与整合</h2>
+
+<p>说到数据操作，这也是一个十分宽泛的话题，在这里我们就以下4个方面进行介绍：  </p>
+
+<ul>
+<li>数据的筛选，过滤：根据一些特定条件选出或者删除一些观测</li>
+<li>数据的变换：增加或者修改变量</li>
+<li>数据的汇总：分组计算数据的和或者均值</li>
+<li>数据的排序：改变观测的排列顺序<br/></li>
+</ul>
+
+<p>然而在进行这一切之前首先要做的就是了解你的数据，我们以世界银行的数据<a href="http://databank.worldbank.org/data/views/variableselection/selectvariables.aspx?source=millennium-development-goals">Millennium Development Goals</a>为例，来一步步演示如何进行数据操作：</p>
+
+<pre><code class="r">if (!file.exists(&quot;C:/Users/yujun/Documents/MDG_Data.csv&quot;)) {
+  download.file(&quot;http://databank.worldbank.org/data/download/MDG_csv.zip&quot;,&quot;F:/MDG.zip&quot;)
+  unzip(&quot;F:/MDG.zip&quot;)
+}
+MDstats&lt;-read.csv(&quot;C:/Users/yujun/Documents/MDG_Data.csv&quot;)
+</code></pre>
+
+<p>首先先来看一部分数据：</p>
+
+<pre><code class="r">head(MDstats)
+</code></pre>
+
+<pre><code>##   Country.Name Country.Code
+## 1  Afghanistan          AFG
+## 2  Afghanistan          AFG
+## 3  Afghanistan          AFG
+## 4  Afghanistan          AFG
+## 5  Afghanistan          AFG
+## 6  Afghanistan          AFG
+##                                                              Indicator.Name
+## 1             Adolescent fertility rate (births per 1,000 women ages 15-19)
+## 2                                  Agricultural support estimate (% of GDP)
+## 3                                  AIDS estimated deaths (UNAIDS estimates)
+## 4            Annual freshwater withdrawals, total (% of internal resources)
+## 5 Antiretroviral therapy coverage (% of people with advanced HIV infection)
+## 6          ARI treatment (% of children under 5 taken to a health provider)
+##      Indicator.Code X1990 X1991 X1992 X1993 X1994 X1995 X1996  X1997 X1998
+## 1       SP.ADO.TFRT 167.5 168.1 168.7   169 169.3 169.5 169.8 170.06 166.1
+## 2 NY.AGR.SUBS.GD.ZS    NA    NA    NA    NA    NA    NA    NA     NA    NA
+## 3    SH.DYN.AIDS.DH 100.0 100.0 100.0   100 100.0 100.0 100.0 100.00 100.0
+## 4    ER.H2O.FWTL.ZS    NA    NA    NA    NA    NA    NA    NA  55.38    NA
+## 5    SH.HIV.ARTC.ZS    NA    NA    NA    NA    NA    NA    NA     NA    NA
+## 6    SH.STA.ARIC.ZS    NA    NA    NA    NA    NA    NA    NA     NA    NA
+##   X1999 X2000 X2001  X2002 X2003 X2004 X2005 X2006  X2007 X2008 X2009
+## 1 162.2 158.3 154.4 150.50 143.9 137.3 130.7 124.1 117.47 111.3 105.2
+## 2    NA    NA    NA     NA    NA    NA    NA    NA     NA    NA    NA
+## 3 100.0 100.0 200.0 200.00 200.0 200.0 200.0 200.0 200.00 200.0 500.0
+## 4    NA    NA    NA  43.01    NA    NA    NA    NA  43.01    NA    NA
+## 5    NA    NA    NA     NA    NA    NA    NA    NA     NA    NA   1.0
+## 6    NA    NA    NA     NA    NA    NA    NA    NA     NA    NA    NA
+##   X2010  X2011  X2012 X2013
+## 1  99.1  92.97  86.84    NA
+## 2    NA     NA     NA    NA
+## 3 500.0 500.00 500.00    NA
+## 4    NA  43.01     NA    NA
+## 5   4.0   9.00   8.00    NA
+## 6    NA  60.50     NA    NA
+</code></pre>
+
+<pre><code class="r">tail(MDstats)
+</code></pre>
+
+<pre><code>##       Country.Name Country.Code
+## 33093     Zimbabwe          ZWE
+## 33094     Zimbabwe          ZWE
+## 33095     Zimbabwe          ZWE
+## 33096     Zimbabwe          ZWE
+## 33097     Zimbabwe          ZWE
+## 33098     Zimbabwe          ZWE
+##                                                      Indicator.Name
+## 33093   Tuberculosis treatment success rate (% of registered cases)
+## 33094  Unmet need for contraception (% of married women ages 15-49)
+## 33095 Use of insecticide-treated bed nets (% of under-5 population)
+## 33096        Vulnerable employment, female (% of female employment)
+## 33097            Vulnerable employment, male (% of male employment)
+## 33098          Vulnerable employment, total (% of total employment)
+##          Indicator.Code X1990 X1991 X1992 X1993 X1994 X1995 X1996 X1997
+## 33093    SH.TBS.CURE.ZS    NA    NA    NA    NA  52.0    53    32  69.0
+## 33094       SP.UWT.TFRT    NA    NA    NA    NA    NA    NA    NA    NA
+## 33095    SH.MLR.NETS.ZS    NA    NA    NA    NA    NA    NA    NA    NA
+## 33096 SL.EMP.VULN.FE.ZS    NA    NA    NA    NA  81.6    NA    NA  77.4
+## 33097 SL.EMP.VULN.MA.ZS    NA    NA    NA    NA  46.5    NA    NA  43.3
+## 33098    SL.EMP.VULN.ZS    NA    NA    NA    NA  63.6    NA    NA  60.3
+##       X1998 X1999 X2000 X2001 X2002 X2003 X2004 X2005 X2006 X2007 X2008
+## 33093    70  73.0    69    71  67.0    66    54    68  60.0    78    74
+## 33094    NA    NA    NA    NA    NA    NA    NA    NA  12.8    NA    NA
+## 33095    NA    NA    NA    NA    NA    NA    NA    NA   2.9    NA    NA
+## 33096    NA  76.8    NA    NA  76.5    NA    NA    NA    NA    NA    NA
+## 33097    NA  44.5    NA    NA  48.4    NA    NA    NA    NA    NA    NA
+## 33098    NA  60.3    NA    NA  61.9    NA    NA    NA    NA    NA    NA
+##       X2009 X2010 X2011 X2012 X2013
+## 33093  78.0    81  81.0    NA    NA
+## 33094    NA    NA  14.6    NA    NA
+## 33095  17.3    NA   9.7    NA    NA
+## 33096    NA    NA    NA    NA    NA
+## 33097    NA    NA    NA    NA    NA
+## 33098    NA    NA    NA    NA    NA
+</code></pre>
+
+<p>我们显然发现了这不是一个tidy data，那么我们先将其变换为我们喜欢的tidy data，之后再看看数据摘要及数据集各单元的属性：</p>
+
+<pre><code>##   countryname countrycode
+## 1 Afghanistan         AFG
+## 2 Afghanistan         AFG
+## 3 Afghanistan         AFG
+## 4 Afghanistan         AFG
+## 5 Afghanistan         AFG
+## 6 Afghanistan         AFG
+##                                                               indicatorname
+## 1             Adolescent fertility rate (births per 1,000 women ages 15-19)
+## 2                                  Agricultural support estimate (% of GDP)
+## 3                                  AIDS estimated deaths (UNAIDS estimates)
+## 4            Annual freshwater withdrawals, total (% of internal resources)
+## 5 Antiretroviral therapy coverage (% of people with advanced HIV infection)
+## 6          ARI treatment (% of children under 5 taken to a health provider)
+##       indicatorcode  year value
+## 1       SP.ADO.TFRT X1990 167.5
+## 2 NY.AGR.SUBS.GD.ZS X1990    NA
+## 3    SH.DYN.AIDS.DH X1990 100.0
+## 4    ER.H2O.FWTL.ZS X1990    NA
+## 5    SH.HIV.ARTC.ZS X1990    NA
+## 6    SH.STA.ARIC.ZS X1990    NA
+</code></pre>
+
+<pre><code class="r">summary(MDstatsMelt)
+</code></pre>
+
+<pre><code>##          countryname      countrycode    
+##  Afghanistan   :  3216   ABW    :  3216  
+##  Albania       :  3216   ADO    :  3216  
+##  Algeria       :  3216   AFG    :  3216  
+##  American Samoa:  3216   AGO    :  3216  
+##  Andorra       :  3216   ALB    :  3216  
+##  Angola        :  3216   ARB    :  3216  
+##  (Other)       :775056   (Other):775056  
+##                                                                    indicatorname   
+##  Adolescent fertility rate (births per 1,000 women ages 15-19)            :  5928  
+##  Agricultural support estimate (% of GDP)                                 :  5928  
+##  AIDS estimated deaths (UNAIDS estimates)                                 :  5928  
+##  Annual freshwater withdrawals, total (% of internal resources)           :  5928  
+##  Antiretroviral therapy coverage (% of people with advanced HIV infection):  5928  
+##  ARI treatment (% of children under 5 taken to a health provider)         :  5928  
+##  (Other)                                                                  :758784  
+##            indicatorcode         year            value          
+##  AG.LND.FRST.K2   :  5928   X1990  : 33098   Min.   :-9.43e+08  
+##  AG.LND.FRST.ZS   :  5928   X1991  : 33098   1st Qu.: 1.10e+01  
+##  DC.ODA.COMM.CD   :  5928   X1992  : 33098   Median : 5.10e+01  
+##  DC.ODA.COMM.SA.CD:  5928   X1993  : 33098   Mean   : 2.26e+10  
+##  DC.ODA.SOCL.CD   :  5928   X1994  : 33098   3rd Qu.: 9.80e+01  
+##  DC.ODA.SOCL.ZS   :  5928   X1995  : 33098   Max.   : 7.53e+13  
+##  (Other)          :758784   (Other):595764   NA&#39;s   :495519
+</code></pre>
+
+<pre><code class="r">str(MDstatsMelt)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    794352 obs. of  6 variables:
+##  $ countryname  : Factor w/ 247 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ countrycode  : Factor w/ 247 levels &quot;ABW&quot;,&quot;ADO&quot;,&quot;AFG&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ indicatorname: Factor w/ 134 levels &quot;Adolescent fertility rate (births per 1,000 women ages 15-19)&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
+##  $ indicatorcode: Factor w/ 134 levels &quot;AG.LND.FRST.K2&quot;,..: 120 39 64 30 72 82 129 130 131 132 ...
+##  $ year         : Factor w/ 24 levels &quot;X1990&quot;,&quot;X1991&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ value        : num  168 NA 100 NA NA ...
+</code></pre>
+
+<p>我们可以看看各个数值数据的分位数：</p>
+
+<pre><code class="r">quantile(MDstatsMelt$value,na.rm=TRUE)
+</code></pre>
+
+<pre><code>##         0%        25%        50%        75%       100% 
+## -9.431e+08  1.054e+01  5.060e+01  9.843e+01  7.526e+13
+</code></pre>
+
+<p>看看各个国家的统计数据有多少：</p>
+
+<pre><code class="r">table(MDstatsMelt$countrycode)
+</code></pre>
+
+<pre><code>## 
+##  ABW  ADO  AFG  AGO  ALB  ARB  ARE  ARG  ARM  ASM  ATG  AUS  AUT  AZE  BDI 
+## 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 
+##  BEL  BEN  BFA  BGD  BGR  BHR  BHS  BIH  BLR  BLZ  BMU  BOL  BRA  BRB  BRN 
+## 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 
+##  BTN  BWA  CAF  CAN  CEB  CHE  CHI  CHL  CHN  CIV  CMR  COG  COL  COM  CPV 
+## 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 
+##  CRI  CSS  CUB  CUW  CYM  CYP  CZE  DEU  DJI  DMA  DNK  DOM  DZA  EAP  EAS 
+## 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 
+##  ECA  ECS  ECU  EGY  EMU  ERI  ESP  EST  ETH  EUU  FCS  FIN  FJI  FRA  FRO 
+## 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 
+##  FSM  GAB  GBR  GEO  GHA  GIN  GMB  GNB  GNQ  GRC  GRD  GRL  GTM  GUM  GUY 
+## 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 
+##  HIC  HKG  HND  HPC  HRV  HTI  HUN  IDN  IMY  IND  IRL  IRN  IRQ  ISL  ISR 
+## 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 
+##  ITA  JAM  JOR  JPN  KAZ  KEN  KGZ  KHM  KIR  KNA  KOR  KSV  KWT  LAC  LAO 
+## 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 
+##  LBN  LBR  LBY  LCA  LCN  LDC  LIC  LIE  LKA  LMC  LMY  LSO  LTU  LUX  LVA 
+## 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 
+##  MAC  MAF  MAR  MCO  MDA  MDG  MDV  MEA  MEX  MHL  MIC  MKD  MLI  MLT  MMR 
+## 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 
+##  MNA  MNE  MNG  MNP  MOZ  MRT  MUS  MWI  MYS  NAC  NAM  NCL  NER  NGA  NIC 
+## 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 
+##  NLD  NOC  NOR  NPL  NZL  OEC  OED  OMN  OSS  PAK  PAN  PER  PHL  PLW  PNG 
+## 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 
+##  POL  PRI  PRK  PRT  PRY  PSS  PYF  QAT  ROM  RUS  RWA  SAS  SAU  SDN  SEN 
+## 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 
+##  SGP  SLB  SLE  SLV  SMR  SOM  SRB  SSA  SSD  SSF  SST  STP  SUR  SVK  SVN 
+## 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 
+##  SWE  SWZ  SXM  SYC  SYR  TCA  TCD  TGO  THA  TJK  TKM  TMP  TON  TTO  TUN 
+## 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 
+##  TUR  TUV  TZA  UGA  UKR  UMC  URY  USA  UZB  VCT  VEN  VIR  VNM  VUT  WBG 
+## 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 3216 
+##  WLD  WSM  YEM  ZAF  ZAR  ZMB  ZWE 
+## 3216 3216 3216 3216 3216 3216 3216
+</code></pre>
+
+<p>看看缺失值：</p>
+
+<pre><code class="r">sum(is.na(MDstatsMelt$value))  #总的缺失值
+</code></pre>
+
+<pre><code>## [1] 495519
+</code></pre>
+
+<pre><code class="r">colSums(is.na(MDstatsMelt))  #每一列的缺失值
+</code></pre>
+
+<pre><code>##   countryname   countrycode indicatorname indicatorcode          year 
+##             0             0             0             0             0 
+##         value 
+##        495519
+</code></pre>
+
+<pre><code class="r"># 如果我们用回tidy前的数据集，那么这个函数会显得比较有用
+colSums(is.na(MDstats))
+</code></pre>
+
+<pre><code>##   Country.Name   Country.Code Indicator.Name Indicator.Code          X1990 
+##              0              0              0              0          23059 
+##          X1991          X1992          X1993          X1994          X1995 
+##          22293          21672          21753          21491          20970 
+##          X1996          X1997          X1998          X1999          X2000 
+##          20680          20448          20419          19933          18822 
+##          X2001          X2002          X2003          X2004          X2005 
+##          19598          19119          19478          19269          18704 
+##          X2006          X2007          X2008          X2009          X2010 
+##          19044          18641          19256          19162          18756 
+##          X2011          X2012          X2013 
+##          20360          21967          30625
+</code></pre>
+
+<pre><code class="r"># 等价的处理方式
+stat &lt;- function(x) {
+    sum(is.na(x))
+}
+tapply(MDstatsMelt$value, MDstatsMelt$year, stat)
+</code></pre>
+
+<pre><code>## X1990 X1991 X1992 X1993 X1994 X1995 X1996 X1997 X1998 X1999 X2000 X2001 
+## 23059 22293 21672 21753 21491 20970 20680 20448 20419 19933 18822 19598 
+## X2002 X2003 X2004 X2005 X2006 X2007 X2008 X2009 X2010 X2011 X2012 X2013 
+## 19119 19478 19269 18704 19044 18641 19256 19162 18756 20360 21967 30625
+</code></pre>
+
+<p>统计某个国家的统计数据占总统计数目的多少</p>
+
+<pre><code class="r">table(MDstatsMelt$countryname %in% c(&quot;China&quot;))
+</code></pre>
+
+<pre><code>## 
+##  FALSE   TRUE 
+## 791136   3216
+</code></pre>
+
+<pre><code class="r">prop &lt;- table(MDstatsMelt$countryname %in% c(&quot;China&quot;))[2]/sum(table(MDstatsMelt$countryname %in% c(&quot;China&quot;)))
+prop
+</code></pre>
+
+<pre><code>##     TRUE 
+## 0.004049
+</code></pre>
+
+<p>看看数据集的大小：</p>
+
+<pre><code class="r">object.size(MDstatsMelt)
+</code></pre>
+
+<pre><code>## 22301832 bytes
+</code></pre>
+
+<pre><code class="r">print(object.size(MDstatsMelt),units=&quot;Mb&quot;)
+</code></pre>
+
+<pre><code>## 21.3 Mb
+</code></pre>
+
+<p>至此，我们可以说我们对数据有了一定的了解。另外值得一提的是，对于某些特定的数据，也许xtabs，ftable是有用的。  </p>
+
+<h3>数据的筛选</h3>
+
+<p>要提取相应内容的数据，最为常用的就是提取相应元素，比如提取某个元素，提取某一行，某一列。我们通过下面下面的例子来学习：</p>
+
+<pre><code class="r">data&lt;-data.frame(a=sample(1:10),b=rep(c(&quot;a&quot;,&quot;b&quot;),each=5),cdf=rnorm(10))
+data
+</code></pre>
+
+<pre><code>##     a b     cdf
+## 1   1 a  0.5755
+## 2  10 a  0.8087
+## 3   2 a  0.9810
+## 4   7 a -0.4635
+## 5   4 a  0.5094
+## 6   6 b  1.0514
+## 7   5 b -1.5338
+## 8   9 b  1.0047
+## 9   3 b  1.0004
+## 10  8 b -1.3566
+</code></pre>
+
+<pre><code class="r">#提取相应元素
+data[2,1]
+</code></pre>
+
+<pre><code>## [1] 10
+</code></pre>
+
+<pre><code class="r">data[[1]][[2]]
+</code></pre>
+
+<pre><code>## [1] 10
+</code></pre>
+
+<pre><code class="r">data[[c(1,2)]]
+</code></pre>
+
+<pre><code>## [1] 10
+</code></pre>
+
+<pre><code class="r">data$a[2]
+</code></pre>
+
+<pre><code>## [1] 10
+</code></pre>
+
+<pre><code class="r">#提取某一列
+data[[3]]
+</code></pre>
+
+<pre><code>##  [1]  0.5755  0.8087  0.9810 -0.4635  0.5094  1.0514 -1.5338  1.0047
+##  [9]  1.0004 -1.3566
+</code></pre>
+
+<pre><code class="r">data$cdf
+</code></pre>
+
+<pre><code>##  [1]  0.5755  0.8087  0.9810 -0.4635  0.5094  1.0514 -1.5338  1.0047
+##  [9]  1.0004 -1.3566
+</code></pre>
+
+<pre><code class="r">data$c
+</code></pre>
+
+<pre><code>##  [1]  0.5755  0.8087  0.9810 -0.4635  0.5094  1.0514 -1.5338  1.0047
+##  [9]  1.0004 -1.3566
+</code></pre>
+
+<pre><code class="r">data[[&quot;c&quot;]]
+</code></pre>
+
+<pre><code>## NULL
+</code></pre>
+
+<pre><code class="r">data[[&quot;c&quot;, exact = FALSE]]
+</code></pre>
+
+<pre><code>##  [1]  0.5755  0.8087  0.9810 -0.4635  0.5094  1.0514 -1.5338  1.0047
+##  [9]  1.0004 -1.3566
+</code></pre>
+
+<p>数据的筛选还有一个最为常用的的就是移除缺失值：</p>
+
+<pre><code class="r">data&lt;-data.frame(a=c(sample(1:5),NA,NA,sample(6:10)),b=c(rep(c(&quot;a&quot;,&quot;b&quot;),each=5),NA,NA),cdf=rnorm(12))
+data
+</code></pre>
+
+<pre><code>##     a    b       cdf
+## 1   5    a -0.276400
+## 2   1    a -1.861240
+## 3   3    a -2.028003
+## 4   4    a -0.348072
+## 5   2    a  0.937975
+## 6  NA    b -1.220922
+## 7  NA    b  0.004012
+## 8   9    b -0.133295
+## 9   7    b -0.596801
+## 10  8    b  1.233629
+## 11 10 &lt;NA&gt;  0.762653
+## 12  6 &lt;NA&gt;  0.162045
+</code></pre>
+
+<pre><code class="r">good &lt;- complete.cases(data)
+data[good, ]
+</code></pre>
+
+<pre><code>##    a b     cdf
+## 1  5 a -0.2764
+## 2  1 a -1.8612
+## 3  3 a -2.0280
+## 4  4 a -0.3481
+## 5  2 a  0.9380
+## 8  9 b -0.1333
+## 9  7 b -0.5968
+## 10 8 b  1.2336
+</code></pre>
+
+<pre><code class="r">bad &lt;- as.data.frame(is.na(data))
+data[!(bad$a|bad$b|bad$c),]
+</code></pre>
+
+<pre><code>##    a b     cdf
+## 1  5 a -0.2764
+## 2  1 a -1.8612
+## 3  3 a -2.0280
+## 4  4 a -0.3481
+## 5  2 a  0.9380
+## 8  9 b -0.1333
+## 9  7 b -0.5968
+## 10 8 b  1.2336
+</code></pre>
+
+<p>数据筛选有时是为了获得符合条件的数据：</p>
+
+<pre><code class="r">X &lt;- data.frame(&quot;var1&quot;=sample(1:5),&quot;var2&quot;=sample(6:10),&quot;var3&quot;=sample(11:15))
+X &lt;- X[sample(1:5),]; X$var2[c(1,3)] = NA
+X
+</code></pre>
+
+<pre><code>##   var1 var2 var3
+## 2    5   NA   13
+## 5    3    6   15
+## 1    2   NA   12
+## 3    1    8   11
+## 4    4    9   14
+</code></pre>
+
+<pre><code class="r">X[(X$var1 &lt;= 3 &amp; X$var3 &gt; 11),]
+</code></pre>
+
+<pre><code>##   var1 var2 var3
+## 5    3    6   15
+## 1    2   NA   12
+</code></pre>
+
+<pre><code class="r">subset(X,(X$var1 &lt;= 3 &amp; X$var3 &gt; 11))
+</code></pre>
+
+<pre><code>##   var1 var2 var3
+## 5    3    6   15
+## 1    2   NA   12
+</code></pre>
+
+<pre><code class="r">X[(X$var1 &lt;= 3 | X$var3 &gt; 15),]
+</code></pre>
+
+<pre><code>##   var1 var2 var3
+## 5    3    6   15
+## 1    2   NA   12
+## 3    1    8   11
+</code></pre>
+
+<pre><code class="r">X[which(X$var1 &lt;= 3 | X$var3 &gt; 15),]
+</code></pre>
+
+<pre><code>##   var1 var2 var3
+## 5    3    6   15
+## 1    2   NA   12
+## 3    1    8   11
+</code></pre>
+
+<p>对于取子集的函数subset，在帮助文档中有一段warning是值得我们注意的：“This is a convenience function intended for use interactively. For programming it is better to use the standard subsetting functions like [, and in particular the non-standard evaluation of argument subset can have unanticipated consequences.&ldquo;</p>
+
+<h3>数据的变换</h3>
+
+<p>常见的数据变换函数有：  </p>
+
+<ul>
+<li>abs(x) 绝对值</li>
+<li>sqrt(x) 开根号</li>
+<li>ceiling(x) 求上线，例：ceiling(3.475) = 4</li>
+<li>floor(x) 求下线，例：floor(3.475) = 3</li>
+<li>round(x,digits=n) 四舍五入，例：round(3.475,digits=2) = 3.48</li>
+<li>signif(x,digits=n) 四舍五入，例：signif(3.475,digits=2) = 3.5</li>
+<li>cos(x), sin(x) etc.三角变换</li>
+<li>log(x) 对数变换</li>
+<li>log2(x), log10(x) 以2、10为底的对数变换</li>
+<li>exp(x) 指数变换<br/></li>
+</ul>
+
+<p>除此以外，我们还经常对数据加标签，以期在回归中测量其效应。我们以MASS包的shuttle数据集为例,想知道不同类型的风(wind)是否需要使用不同的装载机(use)，这里我们希望将head wind标记为1，auto use也记为1，我们可以按照如下办法设置虚拟变量：</p>
+
+<pre><code class="r">library(MASS)
+data(shuttle)
+head(shuttle)
+</code></pre>
+
+<pre><code>##   stability error sign wind   magn vis  use
+## 1     xstab    LX   pp head  Light  no auto
+## 2     xstab    LX   pp head Medium  no auto
+## 3     xstab    LX   pp head Strong  no auto
+## 4     xstab    LX   pp tail  Light  no auto
+## 5     xstab    LX   pp tail Medium  no auto
+## 6     xstab    LX   pp tail Strong  no auto
+</code></pre>
+
+<pre><code class="r">## Make our own variables just for illustration
+shuttle$auto &lt;- 1 * (shuttle$use == &quot;auto&quot;)
+shuttle$headwind &lt;- 1 * (shuttle$wind == &quot;head&quot;)
+head(shuttle)
+</code></pre>
+
+<pre><code>##   stability error sign wind   magn vis  use auto headwind
+## 1     xstab    LX   pp head  Light  no auto    1        1
+## 2     xstab    LX   pp head Medium  no auto    1        1
+## 3     xstab    LX   pp head Strong  no auto    1        1
+## 4     xstab    LX   pp tail  Light  no auto    1        0
+## 5     xstab    LX   pp tail Medium  no auto    1        0
+## 6     xstab    LX   pp tail Strong  no auto    1        0
+</code></pre>
+
+<p>当然对于因子类型变量，relevel函数在线性模型的分析中也是能取得等价效果的。  </p>
+
+<p>有些时候，我们还常常将连续数据离散化，这时我们需要用到函数cut：</p>
+
+<pre><code class="r">data &lt;- rnorm(1000)
+table(cut(data, breaks = quantile(data)))
+</code></pre>
+
+<pre><code>## 
+##  (-3.28,-0.637] (-0.637,0.0321]  (0.0321,0.672]    (0.672,3.37] 
+##             249             250             250             250
+</code></pre>
+
+<pre><code class="r">library(Hmisc)
+table(cut2(data, g = 4))
+</code></pre>
+
+<pre><code>## 
+## [-3.2847,-0.6372) [-0.6372, 0.0334) [ 0.0334, 0.6829) [ 0.6829, 3.3704] 
+##               250               250               250               250
+</code></pre>
+
+<pre><code class="r">detach(&quot;package:Hmisc&quot;, unload = TRUE)
+</code></pre>
+
+<p>获得分组区间后，我们只需要将区间的因子重命名就成功的实现了数据的离散化。</p>
+
+<h3>数据的汇总</h3>
+
+<p>对数据进行汇总，分类汇总是我们也比较常用的，比如对行或列求和，求均值，求分位数：</p>
+
+<pre><code class="r">data &lt;- matrix(1:16, 4, 4)
+data
+</code></pre>
+
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    5    9   13
+## [2,]    2    6   10   14
+## [3,]    3    7   11   15
+## [4,]    4    8   12   16
+</code></pre>
+
+<pre><code class="r">apply(data, 2, mean)
+</code></pre>
+
+<pre><code>## [1]  2.5  6.5 10.5 14.5
+</code></pre>
+
+<pre><code class="r">apply(data, 1, sum)
+</code></pre>
+
+<pre><code>## [1] 28 32 36 40
+</code></pre>
+
+<pre><code class="r">apply(data, 1, quantile, probs = c(0.25, 0.75))
+</code></pre>
+
+<pre><code>##     [,1] [,2] [,3] [,4]
+## 25%    4    5    6    7
+## 75%   10   11   12   13
+</code></pre>
+
+<pre><code class="r">apply(data, 2, quantile, probs = c(0.25, 0.75))
+</code></pre>
+
+<pre><code>##     [,1] [,2]  [,3]  [,4]
+## 25% 1.75 5.75  9.75 13.75
+## 75% 3.25 7.25 11.25 15.25
+</code></pre>
+
+<p>有时候，为了更快些，我们会用一些函数替代apply：</p>
+
+<ul>
+<li>rowSums = apply(x, 1, sum)</li>
+<li>rowMeans = apply(x, 1, mean)</li>
+<li>colSums = apply(x, 2, sum)</li>
+<li>colMeans = apply(x, 2, mean)</li>
+</ul>
+
+<p>我们有时也会处理一些列表，对列表的分类汇总我们会用到sapply,lapply，不同的是前者返回一个向量或矩阵，后者返回一个列表，例：</p>
+
+<pre><code class="r">x &lt;- list(a = 1:10, beta = exp(-3:3), logic = c(TRUE,FALSE,FALSE,TRUE))
+lapply(x, mean)
+</code></pre>
+
+<pre><code>## $a
+## [1] 5.5
+## 
+## $beta
+## [1] 4.535
+## 
+## $logic
+## [1] 0.5
+</code></pre>
+
+<pre><code class="r">sapply(x, mean)
+</code></pre>
+
+<pre><code>##     a  beta logic 
+## 5.500 4.535 0.500
+</code></pre>
+
+<pre><code class="r"># median and quartiles for each list element
+lapply(x, quantile, probs = 1:3/4)
+</code></pre>
+
+<pre><code>## $a
+##  25%  50%  75% 
+## 3.25 5.50 7.75 
+## 
+## $beta
+##    25%    50%    75% 
+## 0.2516 1.0000 5.0537 
+## 
+## $logic
+## 25% 50% 75% 
+## 0.0 0.5 1.0
+</code></pre>
+
+<pre><code class="r">sapply(x, quantile)
+</code></pre>
+
+<pre><code>##          a     beta logic
+## 0%    1.00  0.04979   0.0
+## 25%   3.25  0.25161   0.0
+## 50%   5.50  1.00000   0.5
+## 75%   7.75  5.05367   1.0
+## 100% 10.00 20.08554   1.0
+</code></pre>
+
+<p>有时候我们还会进行分类汇总，如统计男女工资均值,这时你可以用tapply：</p>
+
+<pre><code class="r">group &lt;- (rbinom(32, n = 20, prob = 0.4))
+groups &lt;- factor(rep(1:2,10))
+tapply(group, groups, length) 
+</code></pre>
+
+<pre><code>##  1  2 
+## 10 10
+</code></pre>
+
+<pre><code class="r">tapply(group, groups, sum)
+</code></pre>
+
+<pre><code>##   1   2 
+## 135 122
+</code></pre>
+
+<pre><code class="r">tapply(group, groups, mean)
+</code></pre>
+
+<pre><code>##    1    2 
+## 13.5 12.2
+</code></pre>
+
+<h3>数据的排序</h3>
+
+<p>数据的排序需要用到的函数常见的有sort和order，其中sort返回排序的结果，order返回对应数据的排名。例：</p>
+
+<pre><code class="r">X &lt;- data.frame(&quot;var1&quot;=sample(1:5),&quot;var2&quot;=sample(6:10),&quot;var3&quot;=sample(11:15))
+X &lt;- X[sample(1:5),]
+X$var2[c(1,3)] &lt;- NA
+sort(X$var2,decreasing=TRUE)
+</code></pre>
+
+<pre><code>## [1] 9 8 6
+</code></pre>
+
+<pre><code class="r">sort(X$var2,decreasing=TRUE,na.last=TRUE)
+</code></pre>
+
+<pre><code>## [1]  9  8  6 NA NA
+</code></pre>
+
+<pre><code class="r">order(X$var2,decreasing=TRUE)
+</code></pre>
+
+<pre><code>## [1] 2 5 4 1 3
+</code></pre>
+
+<pre><code class="r">order(X$var2,decreasing=TRUE,na.last=TRUE)
+</code></pre>
+
+<pre><code>## [1] 2 5 4 1 3
+</code></pre>
+
+<pre><code class="r">X[order(X$var2),]
+</code></pre>
+
+<pre><code>##   var1 var2 var3
+## 2    1    6   13
+## 5    5    8   15
+## 4    4    9   11
+## 1    2   NA   14
+## 3    3   NA   12
+</code></pre>
+
+<pre><code class="r">#deal with the link
+X$var2[c(1)] &lt;- sample(na.omit(X$var2),1)
+X[order(X$var2,X$var3),]
+</code></pre>
+
+<pre><code>##   var1 var2 var3
+## 2    1    6   13
+## 5    5    8   15
+## 4    4    9   11
+## 1    2    9   14
+## 3    3   NA   12
+</code></pre>
+
+<p>有些时候，更为强大的aggregate函数是我们需要的，我们以R的内置数据集state.x77为例：</p>
+
+<pre><code class="r">aggregate(state.x77,
+          list(Region = state.region,
+               Cold = state.x77[,&quot;Frost&quot;] &gt; 130),
+          mean)
+</code></pre>
+
+<pre><code>##          Region  Cold Population Income Illiteracy Life Exp Murder HS Grad
+## 1     Northeast FALSE     8802.8   4780     1.1800    71.13  5.580   52.06
+## 2         South FALSE     4208.1   4012     1.7375    69.71 10.581   44.34
+## 3 North Central FALSE     7233.8   4633     0.7833    70.96  8.283   53.37
+## 4          West FALSE     4582.6   4550     1.2571    71.70  6.829   60.11
+## 5     Northeast  TRUE     1360.5   4308     0.7750    71.44  3.650   56.35
+## 6 North Central  TRUE     2372.2   4589     0.6167    72.58  2.267   55.67
+## 7          West  TRUE      970.2   4880     0.7500    70.69  7.667   64.20
+##    Frost   Area
+## 1 110.60  21839
+## 2  64.62  54605
+## 3 120.00  56737
+## 4  51.00  91864
+## 5 160.50  13519
+## 6 157.67  68568
+## 7 161.83 184162
+</code></pre>
+
+<p>当然，这里还有一个更为基本与灵活的函数，split，可以帮助你将数据分为若干张满足分类条件的表，你可以一张一张的处理它们：</p>
+
+<pre><code class="r">library(datasets)
+head(airquality)
+</code></pre>
+
+<pre><code>##   Ozone Solar.R Wind Temp Month Day
+## 1    41     190  7.4   67     5   1
+## 2    36     118  8.0   72     5   2
+## 3    12     149 12.6   74     5   3
+## 4    18     313 11.5   62     5   4
+## 5    NA      NA 14.3   56     5   5
+## 6    28      NA 14.9   66     5   6
+</code></pre>
+
+<pre><code class="r">s &lt;- split(airquality, airquality$Month)
+lapply(s, function(x) colMeans(x[, c(&quot;Ozone&quot;, &quot;Solar.R&quot;, &quot;Wind&quot;)]))
+</code></pre>
+
+<pre><code>## $`5`
+##   Ozone Solar.R    Wind 
+##      NA      NA   11.62 
+## 
+## $`6`
+##   Ozone Solar.R    Wind 
+##      NA  190.17   10.27 
+## 
+## $`7`
+##   Ozone Solar.R    Wind 
+##      NA 216.484   8.942 
+## 
+## $`8`
+##   Ozone Solar.R    Wind 
+##      NA      NA   8.794 
+## 
+## $`9`
+##   Ozone Solar.R    Wind 
+##      NA  167.43   10.18
+</code></pre>
+
+<h2>Useful link：</h2>
+
+<ul>
+<li>Hadley Wickham：<a href="http://vita.had.co.nz/papers/tidy-data.pdf">Tidy Data</a></li>
+<li>Phil Spector：<a href="http://link.springer.com/book/10.1007/978-0-387-74731-6">Data Manipulation with R</a></li>
+<li>coursera  material:<a href="https://github.com/yujunbeta/datasharing">How to share data with a statistician</a></li>
+</ul>
+
+</body>
+
+</html>
+
